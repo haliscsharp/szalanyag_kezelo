@@ -1,0 +1,1 @@
+# szalanyag_kezelo
