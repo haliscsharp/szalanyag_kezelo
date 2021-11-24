@@ -31,11 +31,11 @@ namespace szalkezelo
         {
             this.txtNev = new System.Windows.Forms.TextBox();
             this.lblNev = new System.Windows.Forms.Label();
-            this.dgwRaktar = new System.Windows.Forms.DataGridView();
+            this.dgwInput = new System.Windows.Forms.DataGridView();
             this.nev = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbFelvitel = new System.Windows.Forms.GroupBox();
             this.btnFelvitel = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwRaktar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwInput)).BeginInit();
             this.gbFelvitel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,21 +55,21 @@ namespace szalkezelo
             this.lblNev.Text = "Név:";
             this.lblNev.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // dgwRaktar
+            // dgwInput
             // 
-            this.dgwRaktar.AllowUserToAddRows = false;
-            this.dgwRaktar.AllowUserToDeleteRows = false;
-            this.dgwRaktar.AllowUserToOrderColumns = true;
-            this.dgwRaktar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwRaktar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgwInput.AllowUserToAddRows = false;
+            this.dgwInput.AllowUserToDeleteRows = false;
+            this.dgwInput.AllowUserToOrderColumns = true;
+            this.dgwInput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwInput.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nev});
-            this.dgwRaktar.Location = new System.Drawing.Point(12, 12);
-            this.dgwRaktar.Name = "dgwRaktar";
-            this.dgwRaktar.ReadOnly = true;
-            this.dgwRaktar.RowHeadersWidth = 51;
-            this.dgwRaktar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwRaktar.Size = new System.Drawing.Size(332, 314);
-            this.dgwRaktar.TabIndex = 2;
+            this.dgwInput.Location = new System.Drawing.Point(12, 12);
+            this.dgwInput.Name = "dgwInput";
+            this.dgwInput.ReadOnly = true;
+            this.dgwInput.RowHeadersWidth = 51;
+            this.dgwInput.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgwInput.Size = new System.Drawing.Size(332, 314);
+            this.dgwInput.TabIndex = 2;
             // 
             // nev
             // 
@@ -107,11 +107,11 @@ namespace szalkezelo
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(671, 338);
             this.Controls.Add(this.gbFelvitel);
-            this.Controls.Add(this.dgwRaktar);
+            this.Controls.Add(this.dgwInput);
             this.Name = "SimpleNameInput";
             this.Text = "SimpleInput";
             this.Load += new System.EventHandler(this.SimpleInput_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgwRaktar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwInput)).EndInit();
             this.gbFelvitel.ResumeLayout(false);
             this.gbFelvitel.PerformLayout();
             this.ResumeLayout(false);
@@ -122,7 +122,7 @@ namespace szalkezelo
 
         private System.Windows.Forms.TextBox txtNev;
         private System.Windows.Forms.Label lblNev;
-        private System.Windows.Forms.DataGridView dgwRaktar;
+        private System.Windows.Forms.DataGridView dgwInput;
         private System.Windows.Forms.DataGridViewTextBoxColumn nev;
         private System.Windows.Forms.GroupBox gbFelvitel;
         private System.Windows.Forms.Button btnFelvitel;

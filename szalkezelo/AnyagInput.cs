@@ -91,10 +91,10 @@ namespace szalkezelo
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        dgwRaktar.Rows.Clear();
+                        dgwAnyag.Rows.Clear();
                         while (reader.Read())
                         {
-                            dgwRaktar.Rows.Add(reader.GetString(0), reader.GetString(1));
+                            dgwAnyag.Rows.Add(reader.GetString(0), reader.GetString(1));
                         }
                     }
                 }

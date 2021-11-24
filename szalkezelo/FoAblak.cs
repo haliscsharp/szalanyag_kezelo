@@ -20,6 +20,7 @@ namespace szalkezelo
             this.tsmKilepes.Click += TsmKilepes_Click;
             this.tsmRendeles.Click += TsmRendeles_Click;
             this.tsmBevetelezes.Click += TsmBevetelezes_Click;
+            this.tsmSzalanyag.Click += TsmSzalanyag_Click;
 
             this.tsmMeret.Click += TsmMeret_Click;
             this.tsmAnyag.Click += TsmAnyag_Click;
@@ -86,6 +87,13 @@ namespace szalkezelo
         private void TsmBevetelezes_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void TsmSzalanyag_Click(object sender, System.EventArgs e)
+        {
+            SzalanyagInput si = new SzalanyagInput();
+
+            si.ShowDialog();
         }
 
         private void TsmMeret_Click(object sender, EventArgs e)

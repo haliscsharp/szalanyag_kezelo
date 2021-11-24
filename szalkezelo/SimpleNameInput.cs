@@ -87,10 +87,10 @@ namespace szalkezelo
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        dgwRaktar.Rows.Clear();
+                        dgwInput.Rows.Clear();
                         while (reader.Read())
                         {
-                            dgwRaktar.Rows.Add(reader.GetString(0));
+                            dgwInput.Rows.Add(reader.GetString(0));
                         }
                     }
                 }

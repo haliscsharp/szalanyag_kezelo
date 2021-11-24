@@ -31,14 +31,14 @@ namespace szalkezelo
         {
             this.txtNev = new System.Windows.Forms.TextBox();
             this.lblNev = new System.Windows.Forms.Label();
-            this.dgwRaktar = new System.Windows.Forms.DataGridView();
+            this.dgwAnyag = new System.Windows.Forms.DataGridView();
+            this.nev = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rovid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbFelvitel = new System.Windows.Forms.GroupBox();
             this.btnFelvitel = new System.Windows.Forms.Button();
             this.lblRovid = new System.Windows.Forms.Label();
             this.txtRovid = new System.Windows.Forms.TextBox();
-            this.nev = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rovid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwRaktar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwAnyag)).BeginInit();
             this.gbFelvitel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,22 +58,38 @@ namespace szalkezelo
             this.lblNev.Text = "Név:";
             this.lblNev.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // dgwRaktar
+            // dgwAnyag
             // 
-            this.dgwRaktar.AllowUserToAddRows = false;
-            this.dgwRaktar.AllowUserToDeleteRows = false;
-            this.dgwRaktar.AllowUserToOrderColumns = true;
-            this.dgwRaktar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwRaktar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgwAnyag.AllowUserToAddRows = false;
+            this.dgwAnyag.AllowUserToDeleteRows = false;
+            this.dgwAnyag.AllowUserToOrderColumns = true;
+            this.dgwAnyag.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwAnyag.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nev,
             this.rovid});
-            this.dgwRaktar.Location = new System.Drawing.Point(12, 12);
-            this.dgwRaktar.Name = "dgwRaktar";
-            this.dgwRaktar.ReadOnly = true;
-            this.dgwRaktar.RowHeadersWidth = 51;
-            this.dgwRaktar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwRaktar.Size = new System.Drawing.Size(332, 314);
-            this.dgwRaktar.TabIndex = 2;
+            this.dgwAnyag.Location = new System.Drawing.Point(12, 12);
+            this.dgwAnyag.Name = "dgwAnyag";
+            this.dgwAnyag.ReadOnly = true;
+            this.dgwAnyag.RowHeadersWidth = 51;
+            this.dgwAnyag.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgwAnyag.Size = new System.Drawing.Size(332, 314);
+            this.dgwAnyag.TabIndex = 2;
+            // 
+            // nev
+            // 
+            this.nev.HeaderText = "Név";
+            this.nev.MinimumWidth = 6;
+            this.nev.Name = "nev";
+            this.nev.ReadOnly = true;
+            this.nev.Width = 125;
+            // 
+            // rovid
+            // 
+            this.rovid.HeaderText = "Rövidítés";
+            this.rovid.MinimumWidth = 6;
+            this.rovid.Name = "rovid";
+            this.rovid.ReadOnly = true;
+            this.rovid.Width = 125;
             // 
             // gbFelvitel
             // 
@@ -115,33 +131,17 @@ namespace szalkezelo
             this.txtRovid.Size = new System.Drawing.Size(159, 27);
             this.txtRovid.TabIndex = 0;
             // 
-            // nev
-            // 
-            this.nev.HeaderText = "Név";
-            this.nev.MinimumWidth = 6;
-            this.nev.Name = "nev";
-            this.nev.ReadOnly = true;
-            this.nev.Width = 125;
-            // 
-            // rovid
-            // 
-            this.rovid.HeaderText = "Rövidítés";
-            this.rovid.MinimumWidth = 6;
-            this.rovid.Name = "rovid";
-            this.rovid.ReadOnly = true;
-            this.rovid.Width = 125;
-            // 
             // AnyagInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(671, 338);
             this.Controls.Add(this.gbFelvitel);
-            this.Controls.Add(this.dgwRaktar);
+            this.Controls.Add(this.dgwAnyag);
             this.Name = "AnyagInput";
             this.Text = "SimpleInput";
             this.Load += new System.EventHandler(this.SimpleInput_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgwRaktar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwAnyag)).EndInit();
             this.gbFelvitel.ResumeLayout(false);
             this.gbFelvitel.PerformLayout();
             this.ResumeLayout(false);
@@ -152,7 +152,7 @@ namespace szalkezelo
 
         private System.Windows.Forms.TextBox txtNev;
         private System.Windows.Forms.Label lblNev;
-        private System.Windows.Forms.DataGridView dgwRaktar;
+        private System.Windows.Forms.DataGridView dgwAnyag;
         private System.Windows.Forms.GroupBox gbFelvitel;
         private System.Windows.Forms.Button btnFelvitel;
         private System.Windows.Forms.Label lblRovid;
