@@ -60,6 +60,7 @@ namespace szalkezelo
             this.dgwInput.AllowUserToAddRows = false;
             this.dgwInput.AllowUserToDeleteRows = false;
             this.dgwInput.AllowUserToOrderColumns = true;
+            this.dgwInput.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgwInput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwInput.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nev});
@@ -77,7 +78,7 @@ namespace szalkezelo
             this.nev.MinimumWidth = 6;
             this.nev.Name = "nev";
             this.nev.ReadOnly = true;
-            this.nev.Width = 125;
+            this.nev.Width = 64;
             // 
             // gbFelvitel
             // 

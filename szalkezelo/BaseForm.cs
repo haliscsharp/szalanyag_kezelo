@@ -19,6 +19,9 @@ namespace szalkezelo
         public BaseForm()
         {
             InitializeComponent();
+
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
         private void BaseForm_Load(object sender, EventArgs e)

@@ -64,7 +64,7 @@ namespace szalkezelo
                         dgwRaktar.Rows.Clear();
                         while (reader.Read())
                         {
-                            dgwRaktar.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5));
+                            dgwRaktar.Rows.Add(string.Format("{0} ({1}, {2}, {3})", reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3)), reader.GetInt32(4), reader.GetInt32(5));
                         }
                     }
                 }
@@ -86,7 +86,11 @@ namespace szalkezelo
 
         private void TsmBevetelezes_Click(object sender, EventArgs e)
         {
+            Bevetelezes bev = new Bevetelezes();
 
+            bev.ShowDialog();
+
+            fillRaktarTable();
         }
 
         private void TsmSzalanyag_Click(object sender, System.EventArgs e)

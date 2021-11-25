@@ -58,3 +58,4 @@ D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.csproj.CopyComplete
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.genruntimeconfig.cache
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.Bevetelezes.resources

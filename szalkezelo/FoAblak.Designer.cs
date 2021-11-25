@@ -30,10 +30,7 @@ namespace szalkezelo
         private void InitializeComponent()
         {
             this.dgwRaktar = new System.Windows.Forms.DataGridView();
-            this.tipus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.anyag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.meret = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.minoseg = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.szalanyag = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mennyiseg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hossz = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -56,12 +53,10 @@ namespace szalkezelo
             this.dgwRaktar.AllowUserToAddRows = false;
             this.dgwRaktar.AllowUserToDeleteRows = false;
             this.dgwRaktar.AllowUserToOrderColumns = true;
+            this.dgwRaktar.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgwRaktar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwRaktar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.tipus,
-            this.anyag,
-            this.meret,
-            this.minoseg,
+            this.szalanyag,
             this.mennyiseg,
             this.hossz});
             this.dgwRaktar.Location = new System.Drawing.Point(12, 54);
@@ -72,37 +67,13 @@ namespace szalkezelo
             this.dgwRaktar.Size = new System.Drawing.Size(806, 336);
             this.dgwRaktar.TabIndex = 0;
             // 
-            // tipus
+            // szalanyag
             // 
-            this.tipus.HeaderText = "Típus";
-            this.tipus.MinimumWidth = 6;
-            this.tipus.Name = "tipus";
-            this.tipus.ReadOnly = true;
-            this.tipus.Width = 125;
-            // 
-            // anyag
-            // 
-            this.anyag.HeaderText = "Anyag";
-            this.anyag.MinimumWidth = 6;
-            this.anyag.Name = "anyag";
-            this.anyag.ReadOnly = true;
-            this.anyag.Width = 125;
-            // 
-            // meret
-            // 
-            this.meret.HeaderText = "Méret";
-            this.meret.MinimumWidth = 6;
-            this.meret.Name = "meret";
-            this.meret.ReadOnly = true;
-            this.meret.Width = 125;
-            // 
-            // minoseg
-            // 
-            this.minoseg.HeaderText = "Minőség";
-            this.minoseg.MinimumWidth = 6;
-            this.minoseg.Name = "minoseg";
-            this.minoseg.ReadOnly = true;
-            this.minoseg.Width = 125;
+            this.szalanyag.HeaderText = "Szálanyag";
+            this.szalanyag.MinimumWidth = 6;
+            this.szalanyag.Name = "szalanyag";
+            this.szalanyag.ReadOnly = true;
+            this.szalanyag.Width = 105;
             // 
             // mennyiseg
             // 
@@ -110,7 +81,7 @@ namespace szalkezelo
             this.mennyiseg.MinimumWidth = 6;
             this.mennyiseg.Name = "mennyiseg";
             this.mennyiseg.ReadOnly = true;
-            this.mennyiseg.Width = 125;
+            this.mennyiseg.Width = 141;
             // 
             // hossz
             // 
@@ -118,7 +89,7 @@ namespace szalkezelo
             this.hossz.MinimumWidth = 6;
             this.hossz.Name = "hossz";
             this.hossz.ReadOnly = true;
-            this.hossz.Width = 125;
+            this.hossz.Width = 104;
             // 
             // menuStrip1
             // 
@@ -210,6 +181,7 @@ namespace szalkezelo
             this.Controls.Add(this.dgwRaktar);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "FoAblak";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -228,8 +200,6 @@ namespace szalkezelo
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmRendeles;
         private System.Windows.Forms.ToolStripMenuItem tsmKilepes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tipus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn anyag;
         private System.Windows.Forms.DataGridViewTextBoxColumn meret;
         private System.Windows.Forms.DataGridViewTextBoxColumn minoseg;
         private System.Windows.Forms.DataGridViewTextBoxColumn mennyiseg;
@@ -242,6 +212,7 @@ namespace szalkezelo
         private System.Windows.Forms.ToolStripMenuItem tsmMinoseg;
         private System.Windows.Forms.ToolStripMenuItem tsmTipus;
         private System.Windows.Forms.ToolStripMenuItem tsmBevetelezes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn szalanyag;
     }
 }
 

@@ -63,6 +63,7 @@ namespace szalkezelo
             this.dgwAnyag.AllowUserToAddRows = false;
             this.dgwAnyag.AllowUserToDeleteRows = false;
             this.dgwAnyag.AllowUserToOrderColumns = true;
+            this.dgwAnyag.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgwAnyag.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwAnyag.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nev,
@@ -81,7 +82,7 @@ namespace szalkezelo
             this.nev.MinimumWidth = 6;
             this.nev.Name = "nev";
             this.nev.ReadOnly = true;
-            this.nev.Width = 125;
+            this.nev.Width = 64;
             // 
             // rovid
             // 
@@ -89,7 +90,7 @@ namespace szalkezelo
             this.rovid.MinimumWidth = 6;
             this.rovid.Name = "rovid";
             this.rovid.ReadOnly = true;
-            this.rovid.Width = 125;
+            this.rovid.Width = 99;
             // 
             // gbFelvitel
             // 
@@ -139,7 +140,7 @@ namespace szalkezelo
             this.Controls.Add(this.gbFelvitel);
             this.Controls.Add(this.dgwAnyag);
             this.Name = "AnyagInput";
-            this.Text = "SimpleInput";
+            this.Text = "Új anyag felvitele";
             this.Load += new System.EventHandler(this.SimpleInput_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgwAnyag)).EndInit();
             this.gbFelvitel.ResumeLayout(false);
