@@ -44,8 +44,12 @@ namespace szalkezelo
             this.tsmMinoseg = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmTipus = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmKilepes = new System.Windows.Forms.ToolStripMenuItem();
+            this.gbSzurok = new System.Windows.Forms.GroupBox();
+            this.lblSzalanyag = new System.Windows.Forms.Label();
+            this.cbSzuroSzalanyag = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgwRaktar)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.gbSzurok.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgwRaktar
@@ -59,12 +63,12 @@ namespace szalkezelo
             this.szalanyag,
             this.mennyiseg,
             this.hossz});
-            this.dgwRaktar.Location = new System.Drawing.Point(12, 54);
+            this.dgwRaktar.Location = new System.Drawing.Point(12, 113);
             this.dgwRaktar.Name = "dgwRaktar";
             this.dgwRaktar.ReadOnly = true;
             this.dgwRaktar.RowHeadersWidth = 51;
             this.dgwRaktar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwRaktar.Size = new System.Drawing.Size(806, 336);
+            this.dgwRaktar.Size = new System.Drawing.Size(806, 348);
             this.dgwRaktar.TabIndex = 0;
             // 
             // szalanyag
@@ -101,7 +105,7 @@ namespace szalkezelo
             this.tsmKilepes});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1113, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(831, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -173,22 +177,51 @@ namespace szalkezelo
             this.tsmKilepes.Size = new System.Drawing.Size(71, 24);
             this.tsmKilepes.Text = "Kilépés";
             // 
+            // gbSzurok
+            // 
+            this.gbSzurok.Controls.Add(this.lblSzalanyag);
+            this.gbSzurok.Controls.Add(this.cbSzuroSzalanyag);
+            this.gbSzurok.Location = new System.Drawing.Point(12, 31);
+            this.gbSzurok.Name = "gbSzurok";
+            this.gbSzurok.Size = new System.Drawing.Size(807, 76);
+            this.gbSzurok.TabIndex = 2;
+            this.gbSzurok.TabStop = false;
+            this.gbSzurok.Text = "Szűrők";
+            // 
+            // lblSzalanyag
+            // 
+            this.lblSzalanyag.Location = new System.Drawing.Point(26, 25);
+            this.lblSzalanyag.Name = "lblSzalanyag";
+            this.lblSzalanyag.Size = new System.Drawing.Size(159, 28);
+            this.lblSzalanyag.TabIndex = 1;
+            this.lblSzalanyag.Text = "Szálanyag:";
+            this.lblSzalanyag.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cbSzuroSzalanyag
+            // 
+            this.cbSzuroSzalanyag.FormattingEnabled = true;
+            this.cbSzuroSzalanyag.Location = new System.Drawing.Point(191, 26);
+            this.cbSzuroSzalanyag.Name = "cbSzuroSzalanyag";
+            this.cbSzuroSzalanyag.Size = new System.Drawing.Size(262, 28);
+            this.cbSzuroSzalanyag.TabIndex = 0;
+            // 
             // FoAblak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1113, 462);
+            this.ClientSize = new System.Drawing.Size(831, 475);
+            this.Controls.Add(this.gbSzurok);
             this.Controls.Add(this.dgwRaktar);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
             this.Name = "FoAblak";
-            this.Text = "Form1";
+            this.Text = "Raktár";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgwRaktar)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.gbSzurok.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -200,8 +233,6 @@ namespace szalkezelo
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmRendeles;
         private System.Windows.Forms.ToolStripMenuItem tsmKilepes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn meret;
-        private System.Windows.Forms.DataGridViewTextBoxColumn minoseg;
         private System.Windows.Forms.DataGridViewTextBoxColumn mennyiseg;
         private System.Windows.Forms.DataGridViewTextBoxColumn hossz;
         private System.Windows.Forms.ToolStripMenuItem tsmAdatok;
@@ -213,6 +244,9 @@ namespace szalkezelo
         private System.Windows.Forms.ToolStripMenuItem tsmTipus;
         private System.Windows.Forms.ToolStripMenuItem tsmBevetelezes;
         private System.Windows.Forms.DataGridViewTextBoxColumn szalanyag;
+        private System.Windows.Forms.GroupBox gbSzurok;
+        private System.Windows.Forms.Label lblSzalanyag;
+        private System.Windows.Forms.ComboBox cbSzuroSzalanyag;
     }
 }
 

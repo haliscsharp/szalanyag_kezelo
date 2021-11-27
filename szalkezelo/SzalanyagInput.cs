@@ -35,9 +35,13 @@ namespace szalkezelo
         private void fillCbMeret()
         {
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
 
             dt.Columns.Add("id");
             dt.Columns.Add("nev");
+
+            dt2.Columns.Add("id");
+            dt2.Columns.Add("nev");
 
             try
             {
@@ -50,17 +54,28 @@ namespace szalkezelo
                     {
                         dt.Rows.Clear();
                         dt.Rows.Add(-1, "<üres>");
+                        dt2.Rows.Clear();
+                        dt2.Rows.Add(-1, "<üres>");
 
                         while (reader.Read())
                         {
                             dt.Rows.Add(reader.GetInt32(0), reader.GetString(1));
+                            dt2.Rows.Add(reader.GetInt32(0), reader.GetString(1));
                         }
                     }
                 }
 
+                cbSzuroMeret.SelectedIndexChanged -= Szuro_SelectedIndexChanged;
+
                 cbMeret.DataSource = dt;
                 cbMeret.ValueMember = "id";
                 cbMeret.DisplayMember = "nev";
+
+                cbSzuroMeret.DataSource = dt2;
+                cbSzuroMeret.ValueMember = "id";
+                cbSzuroMeret.DisplayMember = "nev";
+
+                cbSzuroMeret.SelectedIndexChanged += Szuro_SelectedIndexChanged;
             }
             catch (Exception e)
             {
@@ -75,9 +90,13 @@ namespace szalkezelo
         private void fillCbAnyag()
         {
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
 
             dt.Columns.Add("id");
             dt.Columns.Add("nev");
+
+            dt2.Columns.Add("id");
+            dt2.Columns.Add("nev");
 
             try
             {
@@ -90,17 +109,28 @@ namespace szalkezelo
                     {
                         dt.Rows.Clear();
                         dt.Rows.Add(-1, "<üres>");
+                        dt2.Rows.Clear();
+                        dt2.Rows.Add(-1, "<üres>");
 
                         while (reader.Read())
                         {
                             dt.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1})", reader.GetString(1), reader.GetString(2)));
+                            dt2.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1})", reader.GetString(1), reader.GetString(2)));
                         }
                     }
                 }
 
+                cbSzuroAnyag.SelectedIndexChanged -= Szuro_SelectedIndexChanged;
+
                 cbAnyag.DataSource = dt;
                 cbAnyag.ValueMember = "id";
                 cbAnyag.DisplayMember = "nev";
+
+                cbSzuroAnyag.DataSource = dt2;
+                cbSzuroAnyag.ValueMember = "id";
+                cbSzuroAnyag.DisplayMember = "nev";
+
+                cbSzuroAnyag.SelectedIndexChanged += Szuro_SelectedIndexChanged;
             }
             catch (Exception e)
             {
@@ -115,9 +145,13 @@ namespace szalkezelo
         private void fillCbMinoseg()
         {
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
 
             dt.Columns.Add("id");
             dt.Columns.Add("nev");
+
+            dt2.Columns.Add("id");
+            dt2.Columns.Add("nev");
 
             try
             {
@@ -130,17 +164,28 @@ namespace szalkezelo
                     {
                         dt.Rows.Clear();
                         dt.Rows.Add(-1, "<üres>");
+                        dt2.Rows.Clear();
+                        dt2.Rows.Add(-1, "<üres>");
 
                         while (reader.Read())
                         {
                             dt.Rows.Add(reader.GetInt32(0), reader.GetString(1));
+                            dt2.Rows.Add(reader.GetInt32(0), reader.GetString(1));
                         }
                     }
                 }
 
+                cbSzuroMinoseg.SelectedIndexChanged -= Szuro_SelectedIndexChanged;
+
                 cbMinoseg.DataSource = dt;
                 cbMinoseg.ValueMember = "id";
                 cbMinoseg.DisplayMember = "nev";
+
+                cbSzuroMinoseg.DataSource = dt2;
+                cbSzuroMinoseg.ValueMember = "id";
+                cbSzuroMinoseg.DisplayMember = "nev";
+
+                cbSzuroMinoseg.SelectedIndexChanged += Szuro_SelectedIndexChanged;
             }
             catch (Exception e)
             {
@@ -155,9 +200,13 @@ namespace szalkezelo
         private void fillCbTipus()
         {
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
 
             dt.Columns.Add("id");
             dt.Columns.Add("nev");
+
+            dt2.Columns.Add("id");
+            dt2.Columns.Add("nev");
 
             try
             {
@@ -170,17 +219,28 @@ namespace szalkezelo
                     {
                         dt.Rows.Clear();
                         dt.Rows.Add(-1, "<üres>");
+                        dt2.Rows.Clear();
+                        dt2.Rows.Add(-1, "<üres>");
 
                         while (reader.Read())
                         {
                             dt.Rows.Add(reader.GetInt32(0), reader.GetString(1));
+                            dt2.Rows.Add(reader.GetInt32(0), reader.GetString(1));
                         }
                     }
                 }
 
+                cbSzuroTipus.SelectedIndexChanged -= Szuro_SelectedIndexChanged;
+
                 cbTipus.DataSource = dt;
                 cbTipus.ValueMember = "id";
                 cbTipus.DisplayMember = "nev";
+
+                cbSzuroTipus.DataSource = dt2;
+                cbSzuroTipus.ValueMember = "id";
+                cbSzuroTipus.DisplayMember = "nev";
+
+                cbSzuroTipus.SelectedIndexChanged += Szuro_SelectedIndexChanged;
             }
             catch (Exception e)
             {
@@ -259,12 +319,40 @@ namespace szalkezelo
         {
             try
             {
+                string filters = "";
+
+                if (cbSzuroMeret.Items.Count > 0 && int.Parse(cbSzuroMeret.SelectedValue.ToString()) != -1)
+                {
+                    filters += string.Format(" meret.id = {0}", cbSzuroMeret.SelectedValue);
+                }
+
+                if (cbSzuroAnyag.Items.Count > 0 && int.Parse(cbSzuroAnyag.SelectedValue.ToString()) != -1)
+                {
+                    if (filters.Length > 0)
+                        filters += " AND";
+                    filters += " anyag.id = " + cbSzuroAnyag.SelectedValue;
+                }
+
+                if (cbSzuroMinoseg.Items.Count > 0 && int.Parse(cbSzuroMinoseg.SelectedValue.ToString()) != -1)
+                {
+                    if (filters.Length > 0)
+                        filters += " AND";
+                    filters += " anyagminoseg.id = " + cbSzuroMinoseg.SelectedValue;
+                }
+
+                if (cbSzuroTipus.Items.Count > 0 && int.Parse(cbSzuroTipus.SelectedValue.ToString()) != -1)
+                {
+                    if (filters.Length > 0)
+                        filters += " AND";
+                    filters += " tipus.id = " + cbSzuroTipus.SelectedValue;
+                }
+
                 string query = string.Format("SELECT meret.nev, anyag.nev, anyag.rovid, anyagminoseg.nev, tipus.nev " +
                     "FROM szalanyag " +
                     "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
                     "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
                     "INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
-                    "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id ;");
+                    "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id " + (filters.Length > 0 ? "WHERE " + filters : "") + ";");
 
                 openConnection();
                 using (SqlCommand command = new SqlCommand(query, conn))
@@ -323,6 +411,11 @@ namespace szalkezelo
             sni.ShowDialog();
 
             fillCbTipus();
+        }
+
+        private void Szuro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fillTable();
         }
     }
 }

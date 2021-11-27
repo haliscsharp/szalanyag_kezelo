@@ -32,8 +32,8 @@ namespace szalkezelo
             this.lblMeret = new System.Windows.Forms.Label();
             this.dgwBevetelezes = new System.Windows.Forms.DataGridView();
             this.beszallito_nev = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.db = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.db = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hossz = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.szalanyag = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbFelvitel = new System.Windows.Forms.GroupBox();
@@ -48,10 +48,21 @@ namespace szalkezelo
             this.btnUjSzalanyag = new System.Windows.Forms.Button();
             this.cbSzalanyag = new System.Windows.Forms.ComboBox();
             this.btnFelvitel = new System.Windows.Forms.Button();
+            this.gbSzurok = new System.Windows.Forms.GroupBox();
+            this.btnSzuro = new System.Windows.Forms.Button();
+            this.chkSzuroDatumIg = new System.Windows.Forms.CheckBox();
+            this.chkSzuroDatumTol = new System.Windows.Forms.CheckBox();
+            this.dtpSzuroIg = new System.Windows.Forms.DateTimePicker();
+            this.dtpSzuroTol = new System.Windows.Forms.DateTimePicker();
+            this.txtSzuroNev = new System.Windows.Forms.TextBox();
+            this.lblSzuroNev = new System.Windows.Forms.Label();
+            this.lblSzuroSzalanyag = new System.Windows.Forms.Label();
+            this.cbSzuroSzalanyag = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgwBevetelezes)).BeginInit();
             this.gbFelvitel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHossz)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDb)).BeginInit();
+            this.gbSzurok.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblMeret
@@ -72,11 +83,11 @@ namespace szalkezelo
             this.dgwBevetelezes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwBevetelezes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.beszallito_nev,
-            this.db,
             this.date,
+            this.db,
             this.hossz,
             this.szalanyag});
-            this.dgwBevetelezes.Location = new System.Drawing.Point(12, 12);
+            this.dgwBevetelezes.Location = new System.Drawing.Point(12, 135);
             this.dgwBevetelezes.Name = "dgwBevetelezes";
             this.dgwBevetelezes.ReadOnly = true;
             this.dgwBevetelezes.RowHeadersWidth = 51;
@@ -92,14 +103,6 @@ namespace szalkezelo
             this.beszallito_nev.ReadOnly = true;
             this.beszallito_nev.Width = 119;
             // 
-            // db
-            // 
-            this.db.HeaderText = "Mennyiség (db)";
-            this.db.MinimumWidth = 6;
-            this.db.Name = "db";
-            this.db.ReadOnly = true;
-            this.db.Width = 129;
-            // 
             // date
             // 
             this.date.HeaderText = "Dátum";
@@ -107,6 +110,14 @@ namespace szalkezelo
             this.date.Name = "date";
             this.date.ReadOnly = true;
             this.date.Width = 83;
+            // 
+            // db
+            // 
+            this.db.HeaderText = "Mennyiség (db)";
+            this.db.MinimumWidth = 6;
+            this.db.Name = "db";
+            this.db.ReadOnly = true;
+            this.db.Width = 129;
             // 
             // hossz
             // 
@@ -138,9 +149,9 @@ namespace szalkezelo
             this.gbFelvitel.Controls.Add(this.cbSzalanyag);
             this.gbFelvitel.Controls.Add(this.btnFelvitel);
             this.gbFelvitel.Controls.Add(this.lblMeret);
-            this.gbFelvitel.Location = new System.Drawing.Point(874, 12);
+            this.gbFelvitel.Location = new System.Drawing.Point(874, 135);
             this.gbFelvitel.Name = "gbFelvitel";
-            this.gbFelvitel.Size = new System.Drawing.Size(498, 251);
+            this.gbFelvitel.Size = new System.Drawing.Size(481, 314);
             this.gbFelvitel.TabIndex = 3;
             this.gbFelvitel.TabStop = false;
             this.gbFelvitel.Text = "Új elem felvitele";
@@ -151,7 +162,7 @@ namespace szalkezelo
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpDate.Location = new System.Drawing.Point(103, 87);
             this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(329, 27);
+            this.dtpDate.Size = new System.Drawing.Size(310, 27);
             this.dtpDate.TabIndex = 8;
             // 
             // nudHossz
@@ -163,7 +174,7 @@ namespace szalkezelo
             0,
             0});
             this.nudHossz.Name = "nudHossz";
-            this.nudHossz.Size = new System.Drawing.Size(329, 27);
+            this.nudHossz.Size = new System.Drawing.Size(310, 27);
             this.nudHossz.TabIndex = 7;
             // 
             // nudDb
@@ -175,7 +186,7 @@ namespace szalkezelo
             0,
             0});
             this.nudDb.Name = "nudDb";
-            this.nudDb.Size = new System.Drawing.Size(329, 27);
+            this.nudDb.Size = new System.Drawing.Size(310, 27);
             this.nudDb.TabIndex = 7;
             // 
             // lblHossz
@@ -218,12 +229,12 @@ namespace szalkezelo
             // 
             this.txtNev.Location = new System.Drawing.Point(103, 21);
             this.txtNev.Name = "txtNev";
-            this.txtNev.Size = new System.Drawing.Size(329, 27);
+            this.txtNev.Size = new System.Drawing.Size(310, 27);
             this.txtNev.TabIndex = 5;
             // 
             // btnUjSzalanyag
             // 
-            this.btnUjSzalanyag.Location = new System.Drawing.Point(438, 119);
+            this.btnUjSzalanyag.Location = new System.Drawing.Point(419, 119);
             this.btnUjSzalanyag.Name = "btnUjSzalanyag";
             this.btnUjSzalanyag.Size = new System.Drawing.Size(53, 29);
             this.btnUjSzalanyag.TabIndex = 4;
@@ -236,12 +247,12 @@ namespace szalkezelo
             this.cbSzalanyag.FormattingEnabled = true;
             this.cbSzalanyag.Location = new System.Drawing.Point(103, 120);
             this.cbSzalanyag.Name = "cbSzalanyag";
-            this.cbSzalanyag.Size = new System.Drawing.Size(329, 28);
+            this.cbSzalanyag.Size = new System.Drawing.Size(310, 28);
             this.cbSzalanyag.TabIndex = 3;
             // 
             // btnFelvitel
             // 
-            this.btnFelvitel.Location = new System.Drawing.Point(338, 200);
+            this.btnFelvitel.Location = new System.Drawing.Point(319, 199);
             this.btnFelvitel.Name = "btnFelvitel";
             this.btnFelvitel.Size = new System.Drawing.Size(94, 29);
             this.btnFelvitel.TabIndex = 2;
@@ -249,21 +260,131 @@ namespace szalkezelo
             this.btnFelvitel.UseVisualStyleBackColor = true;
             this.btnFelvitel.Click += new System.EventHandler(this.btnFelvitel_Click);
             // 
+            // gbSzurok
+            // 
+            this.gbSzurok.Controls.Add(this.btnSzuro);
+            this.gbSzurok.Controls.Add(this.chkSzuroDatumIg);
+            this.gbSzurok.Controls.Add(this.chkSzuroDatumTol);
+            this.gbSzurok.Controls.Add(this.dtpSzuroIg);
+            this.gbSzurok.Controls.Add(this.dtpSzuroTol);
+            this.gbSzurok.Controls.Add(this.txtSzuroNev);
+            this.gbSzurok.Controls.Add(this.lblSzuroNev);
+            this.gbSzurok.Controls.Add(this.lblSzuroSzalanyag);
+            this.gbSzurok.Controls.Add(this.cbSzuroSzalanyag);
+            this.gbSzurok.Location = new System.Drawing.Point(12, 12);
+            this.gbSzurok.Name = "gbSzurok";
+            this.gbSzurok.Size = new System.Drawing.Size(856, 117);
+            this.gbSzurok.TabIndex = 4;
+            this.gbSzurok.TabStop = false;
+            this.gbSzurok.Text = "Szűrők";
+            // 
+            // btnSzuro
+            // 
+            this.btnSzuro.Location = new System.Drawing.Point(741, 66);
+            this.btnSzuro.Name = "btnSzuro";
+            this.btnSzuro.Size = new System.Drawing.Size(94, 29);
+            this.btnSzuro.TabIndex = 11;
+            this.btnSzuro.Tag = "";
+            this.btnSzuro.Text = "Szűrés";
+            this.btnSzuro.UseVisualStyleBackColor = true;
+            this.btnSzuro.Click += new System.EventHandler(this.btnSzuro_Click);
+            // 
+            // chkSzuroDatumIg
+            // 
+            this.chkSzuroDatumIg.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkSzuroDatumIg.Location = new System.Drawing.Point(367, 69);
+            this.chkSzuroDatumIg.Name = "chkSzuroDatumIg";
+            this.chkSzuroDatumIg.Size = new System.Drawing.Size(126, 30);
+            this.chkSzuroDatumIg.TabIndex = 10;
+            this.chkSzuroDatumIg.Text = "Dátum ig:";
+            this.chkSzuroDatumIg.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkSzuroDatumIg.UseVisualStyleBackColor = true;
+            this.chkSzuroDatumIg.CheckedChanged += new System.EventHandler(this.cbSzuroDatumIg_CheckedChanged);
+            // 
+            // chkSzuroDatumTol
+            // 
+            this.chkSzuroDatumTol.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkSzuroDatumTol.Location = new System.Drawing.Point(367, 25);
+            this.chkSzuroDatumTol.Name = "chkSzuroDatumTol";
+            this.chkSzuroDatumTol.Size = new System.Drawing.Size(126, 30);
+            this.chkSzuroDatumTol.TabIndex = 10;
+            this.chkSzuroDatumTol.Text = "Dátum tól:";
+            this.chkSzuroDatumTol.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkSzuroDatumTol.UseVisualStyleBackColor = true;
+            this.chkSzuroDatumTol.CheckedChanged += new System.EventHandler(this.cbSzuroDatumTol_CheckedChanged);
+            // 
+            // dtpSzuroIg
+            // 
+            this.dtpSzuroIg.CustomFormat = "yyyy. MM. dd. HH:mm";
+            this.dtpSzuroIg.Enabled = false;
+            this.dtpSzuroIg.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpSzuroIg.Location = new System.Drawing.Point(499, 69);
+            this.dtpSzuroIg.Name = "dtpSzuroIg";
+            this.dtpSzuroIg.Size = new System.Drawing.Size(221, 27);
+            this.dtpSzuroIg.TabIndex = 9;
+            // 
+            // dtpSzuroTol
+            // 
+            this.dtpSzuroTol.CustomFormat = "yyyy. MM. dd. HH:mm";
+            this.dtpSzuroTol.Enabled = false;
+            this.dtpSzuroTol.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpSzuroTol.Location = new System.Drawing.Point(499, 27);
+            this.dtpSzuroTol.Name = "dtpSzuroTol";
+            this.dtpSzuroTol.Size = new System.Drawing.Size(221, 27);
+            this.dtpSzuroTol.TabIndex = 9;
+            // 
+            // txtSzuroNev
+            // 
+            this.txtSzuroNev.Location = new System.Drawing.Point(119, 26);
+            this.txtSzuroNev.Name = "txtSzuroNev";
+            this.txtSzuroNev.Size = new System.Drawing.Size(242, 27);
+            this.txtSzuroNev.TabIndex = 2;
+            this.txtSzuroNev.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSzuroNev_KeyPress);
+            // 
+            // lblSzuroNev
+            // 
+            this.lblSzuroNev.Location = new System.Drawing.Point(21, 25);
+            this.lblSzuroNev.Name = "lblSzuroNev";
+            this.lblSzuroNev.Size = new System.Drawing.Size(92, 28);
+            this.lblSzuroNev.TabIndex = 1;
+            this.lblSzuroNev.Text = "Név:";
+            this.lblSzuroNev.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblSzuroSzalanyag
+            // 
+            this.lblSzuroSzalanyag.Location = new System.Drawing.Point(21, 67);
+            this.lblSzuroSzalanyag.Name = "lblSzuroSzalanyag";
+            this.lblSzuroSzalanyag.Size = new System.Drawing.Size(92, 28);
+            this.lblSzuroSzalanyag.TabIndex = 1;
+            this.lblSzuroSzalanyag.Text = "Szálanyag:";
+            this.lblSzuroSzalanyag.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cbSzuroSzalanyag
+            // 
+            this.cbSzuroSzalanyag.FormattingEnabled = true;
+            this.cbSzuroSzalanyag.Location = new System.Drawing.Point(119, 68);
+            this.cbSzuroSzalanyag.Name = "cbSzuroSzalanyag";
+            this.cbSzuroSzalanyag.Size = new System.Drawing.Size(242, 28);
+            this.cbSzuroSzalanyag.TabIndex = 0;
+            // 
             // Bevetelezes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1384, 338);
+            this.ClientSize = new System.Drawing.Size(1364, 459);
+            this.Controls.Add(this.gbSzurok);
             this.Controls.Add(this.gbFelvitel);
             this.Controls.Add(this.dgwBevetelezes);
             this.Name = "Bevetelezes";
             this.Text = "Bevételezés";
-            this.Load += new System.EventHandler(this.SimpleInput_Load);
+            this.Load += new System.EventHandler(this.Bevetelezes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgwBevetelezes)).EndInit();
             this.gbFelvitel.ResumeLayout(false);
             this.gbFelvitel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHossz)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDb)).EndInit();
+            this.gbSzurok.ResumeLayout(false);
+            this.gbSzurok.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -281,12 +402,22 @@ namespace szalkezelo
         private System.Windows.Forms.Label lblNev;
         private System.Windows.Forms.TextBox txtNev;
         private System.Windows.Forms.Label lblDatum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn beszallito_nev;
-        private System.Windows.Forms.DataGridViewTextBoxColumn db;
-        private System.Windows.Forms.DataGridViewTextBoxColumn date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn hossz;
-        private System.Windows.Forms.DataGridViewTextBoxColumn szalanyag;
         private System.Windows.Forms.NumericUpDown nudHossz;
         private System.Windows.Forms.Label lblHossz;
+        private System.Windows.Forms.DataGridViewTextBoxColumn beszallito_nev;
+        private System.Windows.Forms.DataGridViewTextBoxColumn date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn db;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hossz;
+        private System.Windows.Forms.DataGridViewTextBoxColumn szalanyag;
+        private System.Windows.Forms.GroupBox gbSzurok;
+        private System.Windows.Forms.Label lblSzuroSzalanyag;
+        private System.Windows.Forms.ComboBox cbSzuroSzalanyag;
+        private System.Windows.Forms.TextBox txtSzuroNev;
+        private System.Windows.Forms.Label lblSzuroNev;
+        private System.Windows.Forms.DateTimePicker dtpSzuroIg;
+        private System.Windows.Forms.DateTimePicker dtpSzuroTol;
+        private System.Windows.Forms.Button btnSzuro;
+        private System.Windows.Forms.CheckBox chkSzuroDatumIg;
+        private System.Windows.Forms.CheckBox chkSzuroDatumTol;
     }
 }

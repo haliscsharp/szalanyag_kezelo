@@ -48,8 +48,18 @@ namespace szalkezelo
             this.lblAnyag = new System.Windows.Forms.Label();
             this.lblMinoseg = new System.Windows.Forms.Label();
             this.btnFelvitel = new System.Windows.Forms.Button();
+            this.gbSzurok = new System.Windows.Forms.GroupBox();
+            this.lblSzuroMeret = new System.Windows.Forms.Label();
+            this.lblSzuroAnyag = new System.Windows.Forms.Label();
+            this.cbSzuroAnyag = new System.Windows.Forms.ComboBox();
+            this.cbSzuroMeret = new System.Windows.Forms.ComboBox();
+            this.cbSzuroTipus = new System.Windows.Forms.ComboBox();
+            this.cbSzuroMinoseg = new System.Windows.Forms.ComboBox();
+            this.lblSzuroTipus = new System.Windows.Forms.Label();
+            this.lblSzuroMinoseg = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgwSzalanyag)).BeginInit();
             this.gbFelvitel.SuspendLayout();
+            this.gbSzurok.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblMeret
@@ -73,7 +83,7 @@ namespace szalkezelo
             this.anyag,
             this.minoseg,
             this.tipus});
-            this.dgwSzalanyag.Location = new System.Drawing.Point(12, 12);
+            this.dgwSzalanyag.Location = new System.Drawing.Point(12, 135);
             this.dgwSzalanyag.Name = "dgwSzalanyag";
             this.dgwSzalanyag.ReadOnly = true;
             this.dgwSzalanyag.RowHeadersWidth = 51;
@@ -128,9 +138,9 @@ namespace szalkezelo
             this.gbFelvitel.Controls.Add(this.lblMinoseg);
             this.gbFelvitel.Controls.Add(this.btnFelvitel);
             this.gbFelvitel.Controls.Add(this.lblMeret);
-            this.gbFelvitel.Location = new System.Drawing.Point(577, 12);
+            this.gbFelvitel.Location = new System.Drawing.Point(580, 135);
             this.gbFelvitel.Name = "gbFelvitel";
-            this.gbFelvitel.Size = new System.Drawing.Size(412, 218);
+            this.gbFelvitel.Size = new System.Drawing.Size(412, 314);
             this.gbFelvitel.TabIndex = 3;
             this.gbFelvitel.TabStop = false;
             this.gbFelvitel.Text = "Új elem felvitele";
@@ -244,11 +254,101 @@ namespace szalkezelo
             this.btnFelvitel.UseVisualStyleBackColor = true;
             this.btnFelvitel.Click += new System.EventHandler(this.btnFelvitel_Click);
             // 
+            // gbSzurok
+            // 
+            this.gbSzurok.Controls.Add(this.lblSzuroMinoseg);
+            this.gbSzurok.Controls.Add(this.lblSzuroMeret);
+            this.gbSzurok.Controls.Add(this.lblSzuroTipus);
+            this.gbSzurok.Controls.Add(this.lblSzuroAnyag);
+            this.gbSzurok.Controls.Add(this.cbSzuroMinoseg);
+            this.gbSzurok.Controls.Add(this.cbSzuroTipus);
+            this.gbSzurok.Controls.Add(this.cbSzuroMeret);
+            this.gbSzurok.Controls.Add(this.cbSzuroAnyag);
+            this.gbSzurok.Location = new System.Drawing.Point(12, 12);
+            this.gbSzurok.Name = "gbSzurok";
+            this.gbSzurok.Size = new System.Drawing.Size(856, 117);
+            this.gbSzurok.TabIndex = 5;
+            this.gbSzurok.TabStop = false;
+            this.gbSzurok.Text = "Szűrők";
+            // 
+            // lblSzuroMeret
+            // 
+            this.lblSzuroMeret.Location = new System.Drawing.Point(21, 25);
+            this.lblSzuroMeret.Name = "lblSzuroMeret";
+            this.lblSzuroMeret.Size = new System.Drawing.Size(92, 28);
+            this.lblSzuroMeret.TabIndex = 1;
+            this.lblSzuroMeret.Text = "Méret:";
+            this.lblSzuroMeret.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblSzuroAnyag
+            // 
+            this.lblSzuroAnyag.Location = new System.Drawing.Point(21, 67);
+            this.lblSzuroAnyag.Name = "lblSzuroAnyag";
+            this.lblSzuroAnyag.Size = new System.Drawing.Size(92, 28);
+            this.lblSzuroAnyag.TabIndex = 1;
+            this.lblSzuroAnyag.Text = "Anyag:";
+            this.lblSzuroAnyag.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cbSzuroAnyag
+            // 
+            this.cbSzuroAnyag.FormattingEnabled = true;
+            this.cbSzuroAnyag.Location = new System.Drawing.Point(119, 68);
+            this.cbSzuroAnyag.Name = "cbSzuroAnyag";
+            this.cbSzuroAnyag.Size = new System.Drawing.Size(215, 28);
+            this.cbSzuroAnyag.TabIndex = 0;
+            this.cbSzuroAnyag.SelectedIndexChanged += new System.EventHandler(this.Szuro_SelectedIndexChanged);
+            // 
+            // cbSzuroMeret
+            // 
+            this.cbSzuroMeret.FormattingEnabled = true;
+            this.cbSzuroMeret.Location = new System.Drawing.Point(119, 25);
+            this.cbSzuroMeret.Name = "cbSzuroMeret";
+            this.cbSzuroMeret.Size = new System.Drawing.Size(215, 28);
+            this.cbSzuroMeret.TabIndex = 0;
+            this.cbSzuroMeret.SelectedIndexChanged += new System.EventHandler(this.Szuro_SelectedIndexChanged);
+            // 
+            // cbSzuroTipus
+            // 
+            this.cbSzuroTipus.FormattingEnabled = true;
+            this.cbSzuroTipus.Location = new System.Drawing.Point(456, 69);
+            this.cbSzuroTipus.Name = "cbSzuroTipus";
+            this.cbSzuroTipus.Size = new System.Drawing.Size(215, 28);
+            this.cbSzuroTipus.TabIndex = 0;
+            this.cbSzuroTipus.SelectedIndexChanged += new System.EventHandler(this.Szuro_SelectedIndexChanged);
+            // 
+            // cbSzuroMinoseg
+            // 
+            this.cbSzuroMinoseg.FormattingEnabled = true;
+            this.cbSzuroMinoseg.Location = new System.Drawing.Point(456, 26);
+            this.cbSzuroMinoseg.Name = "cbSzuroMinoseg";
+            this.cbSzuroMinoseg.Size = new System.Drawing.Size(215, 28);
+            this.cbSzuroMinoseg.TabIndex = 0;
+            this.cbSzuroMinoseg.SelectedIndexChanged += new System.EventHandler(this.Szuro_SelectedIndexChanged);
+            // 
+            // lblSzuroTipus
+            // 
+            this.lblSzuroTipus.Location = new System.Drawing.Point(358, 68);
+            this.lblSzuroTipus.Name = "lblSzuroTipus";
+            this.lblSzuroTipus.Size = new System.Drawing.Size(92, 28);
+            this.lblSzuroTipus.TabIndex = 1;
+            this.lblSzuroTipus.Text = "Típus:";
+            this.lblSzuroTipus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblSzuroMinoseg
+            // 
+            this.lblSzuroMinoseg.Location = new System.Drawing.Point(358, 26);
+            this.lblSzuroMinoseg.Name = "lblSzuroMinoseg";
+            this.lblSzuroMinoseg.Size = new System.Drawing.Size(92, 28);
+            this.lblSzuroMinoseg.TabIndex = 1;
+            this.lblSzuroMinoseg.Text = "Minőség:";
+            this.lblSzuroMinoseg.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // SzalanyagInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1004, 338);
+            this.ClientSize = new System.Drawing.Size(1004, 463);
+            this.Controls.Add(this.gbSzurok);
             this.Controls.Add(this.gbFelvitel);
             this.Controls.Add(this.dgwSzalanyag);
             this.Name = "SzalanyagInput";
@@ -256,6 +356,7 @@ namespace szalkezelo
             this.Load += new System.EventHandler(this.SimpleInput_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgwSzalanyag)).EndInit();
             this.gbFelvitel.ResumeLayout(false);
+            this.gbSzurok.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -280,5 +381,14 @@ namespace szalkezelo
         private System.Windows.Forms.Label lblTipus;
         private System.Windows.Forms.Label lblAnyag;
         private System.Windows.Forms.Label lblMinoseg;
+        private System.Windows.Forms.GroupBox gbSzurok;
+        private System.Windows.Forms.Label lblSzuroMinoseg;
+        private System.Windows.Forms.Label lblSzuroMeret;
+        private System.Windows.Forms.Label lblSzuroTipus;
+        private System.Windows.Forms.Label lblSzuroAnyag;
+        private System.Windows.Forms.ComboBox cbSzuroMinoseg;
+        private System.Windows.Forms.ComboBox cbSzuroTipus;
+        private System.Windows.Forms.ComboBox cbSzuroMeret;
+        private System.Windows.Forms.ComboBox cbSzuroAnyag;
     }
 }

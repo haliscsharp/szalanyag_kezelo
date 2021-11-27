@@ -110,7 +110,7 @@ namespace szalkezelo
             this.Controls.Add(this.gbFelvitel);
             this.Controls.Add(this.dgwInput);
             this.Name = "SimpleNameInput";
-            this.Text = "SimpleInput";
+            this.Text = "Adatfelvétel";
             this.Load += new System.EventHandler(this.SimpleInput_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgwInput)).EndInit();
             this.gbFelvitel.ResumeLayout(false);

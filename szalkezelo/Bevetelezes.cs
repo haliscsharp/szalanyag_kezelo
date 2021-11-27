@@ -18,24 +18,52 @@ namespace szalkezelo
             InitializeComponent();
         }
 
-        private void SimpleInput_Load(object sender, EventArgs e)
+        private void Bevetelezes_Load(object sender, EventArgs e)
         {
-            fillCbSzalanyag();
-
             fillTable();
+
+            fillCbSzalanyag();
         }
 
         private void fillTable()
         {
             try
             {
-                string query = string.Format("SELECT b.beszallito_nev, b.db, b.datum, b.hossz, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.nev " +
+                string filters = "";
+
+                if (txtSzuroNev.Text != "")
+                {
+                    filters += string.Format(" b.beszallito_nev  like '%{0}%'", txtSzuroNev.Text);
+                }
+
+                if (cbSzuroSzalanyag.Items.Count > 0 && int.Parse(cbSzuroSzalanyag.SelectedValue.ToString()) != -1)
+                {
+                    if (filters.Length > 0)
+                        filters += " AND";
+                    filters += " szalanyag.id = " + cbSzuroSzalanyag.SelectedValue;
+                }
+
+                if (chkSzuroDatumTol.Checked)
+                {
+                    if (filters.Length > 0)
+                        filters += " AND";
+                    filters += string.Format(" b.datum >= '{0}-{1}-{2} {3}:{4}'", dtpSzuroTol.Value.Year, dtpSzuroTol.Value.Month, dtpSzuroTol.Value.Day, dtpSzuroTol.Value.Hour, dtpSzuroTol.Value.Minute);
+                }
+
+                if (chkSzuroDatumIg.Checked)
+                {
+                    if (filters.Length > 0)
+                        filters += " AND";
+                    filters += string.Format(" b.datum <= '{0}-{1}-{2} {3}:{4}'", dtpSzuroIg.Value.Year, dtpSzuroIg.Value.Month, dtpSzuroIg.Value.Day, dtpSzuroIg.Value.Hour, dtpSzuroIg.Value.Minute);
+                }
+
+                string query = string.Format("SELECT b.beszallito_nev, b.datum, b.db, b.hossz, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.nev " +
                     "FROM bevetelezes as b " +
                     "INNER JOIN szalanyag ON b.szalanyag_id = szalanyag.id " +
                     "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
                     "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
                     "INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
-                    "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id;");
+                    "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id " + (filters.Length > 0 ? "WHERE " + filters : "") + ";");
 
                 openConnection();
                 using (SqlCommand command = new SqlCommand(query, conn))
@@ -45,7 +73,7 @@ namespace szalkezelo
                         dgwBevetelezes.Rows.Clear();
                         while (reader.Read())
                         {
-                            dgwBevetelezes.Rows.Add(reader.GetString(0), reader.GetInt32(1), reader.GetDateTime(2), reader.GetInt32(3), string.Format("{0} ({1}, {2}, {3})", reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7)));
+                            dgwBevetelezes.Rows.Add(reader.GetString(0), reader.GetDateTime(1), reader.GetInt32(2), reader.GetInt32(3), string.Format("{0} ({1}, {2}, {3})", reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7)));
                         }
                     }
                 }
@@ -63,9 +91,12 @@ namespace szalkezelo
         private void fillCbSzalanyag()
         {
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
 
             dt.Columns.Add("id");
             dt.Columns.Add("nev");
+            dt2.Columns.Add("id");
+            dt2.Columns.Add("nev");
 
             try
             {
@@ -83,17 +114,28 @@ namespace szalkezelo
                     {
                         dt.Rows.Clear();
                         dt.Rows.Add(-1, "<üres>");
+                        dt2.Rows.Clear();
+                        dt2.Rows.Add(-1, "<üres>");
 
                         while (reader.Read())
                         {
                             dt.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1}, {2}, {3})", reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4)));
+                            dt2.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1}, {2}, {3})", reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4)));
                         }
                     }
                 }
 
+                cbSzuroSzalanyag.SelectedIndexChanged -= CbSzuroSzalanyag_SelectedIndexChanged;
+
                 cbSzalanyag.DataSource = dt;
                 cbSzalanyag.ValueMember = "id";
                 cbSzalanyag.DisplayMember = "nev";
+
+                cbSzuroSzalanyag.DataSource = dt2;
+                cbSzuroSzalanyag.ValueMember = "id";
+                cbSzuroSzalanyag.DisplayMember = "nev";
+
+                cbSzuroSzalanyag.SelectedIndexChanged += CbSzuroSzalanyag_SelectedIndexChanged;
             }
             catch (Exception e)
             {
@@ -221,6 +263,34 @@ namespace szalkezelo
             si.ShowDialog();
 
             fillCbSzalanyag();
+        }
+
+        private void CbSzuroSzalanyag_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fillTable();
+        }
+
+        private void txtSzuroNev_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13) // enter
+            {
+                fillTable();
+            }
+        }
+
+        private void btnSzuro_Click(object sender, EventArgs e)
+        {
+            fillTable();
+        }
+
+        private void cbSzuroDatumTol_CheckedChanged(object sender, EventArgs e)
+        {
+            dtpSzuroTol.Enabled = !dtpSzuroTol.Enabled;
+        }
+
+        private void cbSzuroDatumIg_CheckedChanged(object sender, EventArgs e)
+        {
+            dtpSzuroIg.Enabled = !dtpSzuroIg.Enabled;
         }
     }
 }

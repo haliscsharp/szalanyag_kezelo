@@ -31,7 +31,9 @@ namespace szalkezelo
         
         private void Form1_Load(object sender, EventArgs e)
         {
-            fillRaktarTable();
+            fillTable();
+
+            fillCbSzalanyag();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -39,21 +41,23 @@ namespace szalkezelo
             conn.Close();
         }
 
-        private void TsmKilepes_Click(object sender, System.EventArgs e)
+        private void fillTable()
         {
-            Application.Exit();
-        }
+            string filters = "";
 
-        private void fillRaktarTable()
-        {
+            if (cbSzuroSzalanyag.Items.Count > 0 && int.Parse(cbSzuroSzalanyag.SelectedValue.ToString()) != -1)
+            {
+                filters = "WHERE szalanyag.id = " + cbSzuroSzalanyag.SelectedValue;
+            }
+
             string query = "SELECT tipus.nev, anyag.nev, meret.nev, anyagminoseg.nev, raktar.db, raktar.hossz " +
                 "FROM raktar " +
                 "INNER JOIN szalanyag ON raktar.szalanyag_id = szalanyag.id " +
                 "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
                 "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
                 "INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
-                "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id ;";
-
+                "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id " + filters + ";";
+            
             try
             {
                 openConnection();
@@ -79,6 +83,65 @@ namespace szalkezelo
             }
         }
 
+        private void fillCbSzalanyag()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("id");
+            dt.Columns.Add("nev");
+
+            try
+            {
+                string query = string.Format("SELECT szalanyag.id ,tipus.nev, anyag.rovid, anyagminoseg.nev, meret.nev " +
+                    "FROM szalanyag " +
+                    "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
+                    "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
+                    "INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
+                    "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id ;");
+
+                openConnection();
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        dt.Rows.Clear();
+                        dt.Rows.Add(-1, "<üres>");
+
+                        while (reader.Read())
+                        {
+                            dt.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1}, {2}, {3})", reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4)));
+                        }
+                    }
+                }
+
+                cbSzuroSzalanyag.SelectedIndexChanged -= CbSzuroSzalanyag_SelectedIndexChanged;
+
+                cbSzuroSzalanyag.DataSource = dt;
+                cbSzuroSzalanyag.ValueMember = "id";
+                cbSzuroSzalanyag.DisplayMember = "nev";
+
+                cbSzuroSzalanyag.SelectedIndexChanged += CbSzuroSzalanyag_SelectedIndexChanged;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Hiba történt a szálanyag lista frissítése során!\n\n" + e.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void CbSzuroSzalanyag_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fillTable();
+        }
+
+        private void TsmKilepes_Click(object sender, System.EventArgs e)
+        {
+            Application.Exit();
+        }
+
         private void TsmRendeles_Click(object sender, EventArgs e)
         {
 
@@ -90,7 +153,7 @@ namespace szalkezelo
 
             bev.ShowDialog();
 
-            fillRaktarTable();
+            fillTable();
         }
 
         private void TsmSzalanyag_Click(object sender, System.EventArgs e)
@@ -98,6 +161,8 @@ namespace szalkezelo
             SzalanyagInput si = new SzalanyagInput();
 
             si.ShowDialog();
+
+            fillCbSzalanyag();
         }
 
         private void TsmMeret_Click(object sender, EventArgs e)
