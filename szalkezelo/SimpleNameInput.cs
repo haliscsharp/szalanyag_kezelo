@@ -29,6 +29,12 @@ namespace szalkezelo
 
         private void btnFelvitel_Click(object sender, EventArgs e)
         {
+            if (txtNev.Text == "")
+            {
+                MessageBox.Show("Rossz bemeneti adatok!");
+                return;
+            }
+
             try
             {
                 openConnection();

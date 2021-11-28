@@ -45,6 +45,7 @@ namespace szalkezelo
             // txtNev
             // 
             this.txtNev.Location = new System.Drawing.Point(121, 33);
+            this.txtNev.MaxLength = 50;
             this.txtNev.Name = "txtNev";
             this.txtNev.Size = new System.Drawing.Size(159, 27);
             this.txtNev.TabIndex = 0;
@@ -128,6 +129,7 @@ namespace szalkezelo
             // txtRovid
             // 
             this.txtRovid.Location = new System.Drawing.Point(121, 66);
+            this.txtRovid.MaxLength = 10;
             this.txtRovid.Name = "txtRovid";
             this.txtRovid.Size = new System.Drawing.Size(159, 27);
             this.txtRovid.TabIndex = 0;

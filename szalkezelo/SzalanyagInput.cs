@@ -325,6 +325,15 @@ namespace szalkezelo
 
         private void btnFelvitel_Click(object sender, EventArgs e)
         {
+            if ((cbAnyag.SelectedValue != null && int.Parse(cbAnyag.SelectedValue.ToString()) == -1) ||
+                (cbMinoseg.SelectedValue != null && int.Parse(cbMinoseg.SelectedValue.ToString()) == -1) ||
+                (cbTipus.SelectedValue != null && int.Parse(cbTipus.SelectedValue.ToString()) == -1) ||
+                (cbMeret.SelectedValue != null && int.Parse(cbMeret.SelectedValue.ToString()) == -1))
+            {
+                MessageBox.Show("Rossz bemeneti adatok!");
+                return;
+            }
+
             try
             {
                 openConnection();

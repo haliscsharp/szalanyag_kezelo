@@ -38,11 +38,11 @@ namespace szalkezelo
             this.kellVastagsag = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.kellAtmero = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.gbFelvitel = new System.Windows.Forms.GroupBox();
+            this.chkKellAtmero = new System.Windows.Forms.CheckBox();
             this.chkKellMagassag = new System.Windows.Forms.CheckBox();
+            this.chkKellVastagsag = new System.Windows.Forms.CheckBox();
             this.chkKellSzelesseg = new System.Windows.Forms.CheckBox();
             this.btnFelvitel = new System.Windows.Forms.Button();
-            this.chkKellVastagsag = new System.Windows.Forms.CheckBox();
-            this.chkKellAtmero = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgwInput)).BeginInit();
             this.gbFelvitel.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +50,7 @@ namespace szalkezelo
             // txtNev
             // 
             this.txtNev.Location = new System.Drawing.Point(131, 33);
+            this.txtNev.MaxLength = 50;
             this.txtNev.Name = "txtNev";
             this.txtNev.Size = new System.Drawing.Size(149, 27);
             this.txtNev.TabIndex = 0;
@@ -141,6 +142,18 @@ namespace szalkezelo
             this.gbFelvitel.TabStop = false;
             this.gbFelvitel.Text = "Új elem felvitele";
             // 
+            // chkKellAtmero
+            // 
+            this.chkKellAtmero.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkKellAtmero.Location = new System.Drawing.Point(12, 174);
+            this.chkKellAtmero.Name = "chkKellAtmero";
+            this.chkKellAtmero.Size = new System.Drawing.Size(136, 30);
+            this.chkKellAtmero.TabIndex = 3;
+            this.chkKellAtmero.Text = "Kell átmérő:";
+            this.chkKellAtmero.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkKellAtmero.UseVisualStyleBackColor = true;
+            this.chkKellAtmero.CheckedChanged += new System.EventHandler(this.chkKellAtmero_CheckedChanged);
+            // 
             // chkKellMagassag
             // 
             this.chkKellMagassag.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -152,6 +165,18 @@ namespace szalkezelo
             this.chkKellMagassag.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkKellMagassag.UseVisualStyleBackColor = true;
             this.chkKellMagassag.CheckedChanged += new System.EventHandler(this.chkKellMagassag_CheckedChanged);
+            // 
+            // chkKellVastagsag
+            // 
+            this.chkKellVastagsag.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkKellVastagsag.Location = new System.Drawing.Point(12, 138);
+            this.chkKellVastagsag.Name = "chkKellVastagsag";
+            this.chkKellVastagsag.Size = new System.Drawing.Size(136, 30);
+            this.chkKellVastagsag.TabIndex = 3;
+            this.chkKellVastagsag.Text = "Kell vastagság:";
+            this.chkKellVastagsag.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkKellVastagsag.UseVisualStyleBackColor = true;
+            this.chkKellVastagsag.CheckedChanged += new System.EventHandler(this.chkKellVastagsag_CheckedChanged);
             // 
             // chkKellSzelesseg
             // 
@@ -175,38 +200,14 @@ namespace szalkezelo
             this.btnFelvitel.UseVisualStyleBackColor = true;
             this.btnFelvitel.Click += new System.EventHandler(this.btnFelvitel_Click);
             // 
-            // chkKellVastagsag
-            // 
-            this.chkKellVastagsag.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkKellVastagsag.Location = new System.Drawing.Point(12, 138);
-            this.chkKellVastagsag.Name = "chkKellVastagsag";
-            this.chkKellVastagsag.Size = new System.Drawing.Size(136, 30);
-            this.chkKellVastagsag.TabIndex = 3;
-            this.chkKellVastagsag.Text = "Kell vastagság:";
-            this.chkKellVastagsag.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkKellVastagsag.UseVisualStyleBackColor = true;
-            this.chkKellVastagsag.CheckedChanged += new System.EventHandler(this.chkKellVastagsag_CheckedChanged);
-            // 
-            // chkKellAtmero
-            // 
-            this.chkKellAtmero.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkKellAtmero.Location = new System.Drawing.Point(12, 174);
-            this.chkKellAtmero.Name = "chkKellAtmero";
-            this.chkKellAtmero.Size = new System.Drawing.Size(136, 30);
-            this.chkKellAtmero.TabIndex = 3;
-            this.chkKellAtmero.Text = "Kell átmérő:";
-            this.chkKellAtmero.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkKellAtmero.UseVisualStyleBackColor = true;
-            this.chkKellAtmero.CheckedChanged += new System.EventHandler(this.chkKellAtmero_CheckedChanged);
-            // 
-            // MeretInput
+            // TipusInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(924, 338);
             this.Controls.Add(this.gbFelvitel);
             this.Controls.Add(this.dgwInput);
-            this.Name = "MeretInput";
+            this.Name = "TipusInput";
             this.Text = "Adatfelvétel";
             this.Load += new System.EventHandler(this.SimpleInput_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgwInput)).EndInit();

@@ -146,7 +146,9 @@ namespace szalkezelo
 
         private void TsmRendeles_Click(object sender, EventArgs e)
         {
+            Rendeles re = new Rendeles();
 
+            re.ShowDialog();
         }
 
         private void TsmBevetelezes_Click(object sender, EventArgs e)

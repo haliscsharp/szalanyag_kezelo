@@ -151,6 +151,12 @@ namespace szalkezelo
 
         private void btnFelvitel_Click(object sender, EventArgs e)
         {
+            if (txtNev.Text == "" || nudDb.Value <= 0 || cbSzalanyag.SelectedValue == null || int.Parse(cbSzalanyag.SelectedValue.ToString()) == -1 || nudHossz.Value <= 0)
+            {
+                MessageBox.Show("Rossz bemeneti adatok!");
+                return;
+            }
+
             try
             {
                 openConnection();

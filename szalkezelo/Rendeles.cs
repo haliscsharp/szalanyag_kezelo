@@ -16,5 +16,10 @@ namespace szalkezelo
         {
             InitializeComponent();
         }
+
+        private void btnFelvitel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

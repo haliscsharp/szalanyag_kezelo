@@ -228,6 +228,7 @@ namespace szalkezelo
             // txtNev
             // 
             this.txtNev.Location = new System.Drawing.Point(103, 21);
+            this.txtNev.MaxLength = 50;
             this.txtNev.Name = "txtNev";
             this.txtNev.Size = new System.Drawing.Size(310, 27);
             this.txtNev.TabIndex = 5;
@@ -244,6 +245,7 @@ namespace szalkezelo
             // 
             // cbSzalanyag
             // 
+            this.cbSzalanyag.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSzalanyag.FormattingEnabled = true;
             this.cbSzalanyag.Location = new System.Drawing.Point(103, 120);
             this.cbSzalanyag.Name = "cbSzalanyag";

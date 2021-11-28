@@ -25,6 +25,12 @@ namespace szalkezelo
 
         private void btnFelvitel_Click(object sender, EventArgs e)
         {
+            if ((nudSzelesseg.Value <= 0 && nudMagassag.Value <= 0) || (nudSzelesseg.Value != 0 && nudMagassag.Value <= 0) || (nudSzelesseg.Value <= 0 && nudMagassag.Value != 0))
+            {
+                MessageBox.Show("Rossz bemeneti adatok!");
+                return;
+            }
+
             try
             {
                 openConnection();

@@ -25,6 +25,12 @@ namespace szalkezelo
 
         private void btnFelvitel_Click(object sender, EventArgs e)
         {
+            if (txtNev.Text == "")
+            {
+                MessageBox.Show("Rossz bemeneti adatok!");
+                return;
+            }
+
             try
             {
                 openConnection();
@@ -124,6 +130,14 @@ namespace szalkezelo
             {
                 chkKellAtmero.Checked = false;
             }
+
+            if (chkKellSzelesseg.Checked)
+                chkKellMagassag.Checked = true;
+            else
+            {
+                chkKellMagassag.Checked = false;
+                chkKellVastagsag.Checked = false;
+            }
         }
 
         private void chkKellMagassag_CheckedChanged(object sender, EventArgs e)
@@ -132,6 +146,14 @@ namespace szalkezelo
             {
                 chkKellAtmero.Checked = false;
             }
+
+            if (chkKellMagassag.Checked)
+                chkKellSzelesseg.Checked = true;
+            else
+            {
+                chkKellSzelesseg.Checked = false;
+                chkKellVastagsag.Checked = false;
+            }
         }
 
         private void chkKellVastagsag_CheckedChanged(object sender, EventArgs e)
@@ -139,6 +161,17 @@ namespace szalkezelo
             if (chkKellSzelesseg.Checked || chkKellMagassag.Checked || chkKellVastagsag.Checked)
             {
                 chkKellAtmero.Checked = false;
+            }
+
+            if (chkKellVastagsag.Checked)
+            {
+                chkKellSzelesseg.Checked = true;
+                chkKellMagassag.Checked = true;
+            }
+            else
+            {
+                chkKellSzelesseg.Checked = false;
+                chkKellMagassag.Checked = false;
             }
         }
     }
