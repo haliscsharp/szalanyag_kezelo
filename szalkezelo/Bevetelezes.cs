@@ -57,7 +57,7 @@ namespace szalkezelo
                     filters += string.Format(" b.datum <= '{0}-{1}-{2} {3}:{4}'", dtpSzuroIg.Value.Year, dtpSzuroIg.Value.Month, dtpSzuroIg.Value.Day, dtpSzuroIg.Value.Hour, dtpSzuroIg.Value.Minute);
                 }
 
-                string query = string.Format("SELECT b.beszallito_nev, b.datum, b.db, b.hossz, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.nev " +
+                string query = string.Format("SELECT b.beszallito_nev, b.datum, b.db, b.hossz, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero " +
                     "FROM bevetelezes as b " +
                     "INNER JOIN szalanyag ON b.szalanyag_id = szalanyag.id " +
                     "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
@@ -73,7 +73,8 @@ namespace szalkezelo
                         dgwBevetelezes.Rows.Clear();
                         while (reader.Read())
                         {
-                            dgwBevetelezes.Rows.Add(reader.GetString(0), reader.GetDateTime(1), reader.GetInt32(2), reader.GetInt32(3), string.Format("{0} ({1}, {2}, {3})", reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7)));
+                            Meret m = new Meret(reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9), reader.GetInt32(10));
+                            dgwBevetelezes.Rows.Add(reader.GetString(0), reader.GetDateTime(1), reader.GetInt32(2), reader.GetInt32(3), string.Format("{0} ({1}, {2}, {3})", reader.GetString(4), reader.GetString(5), reader.GetString(6), m.getNev()));
                         }
                     }
                 }
@@ -100,7 +101,7 @@ namespace szalkezelo
 
             try
             {
-                string query = string.Format("SELECT szalanyag.id ,tipus.nev, anyag.rovid, anyagminoseg.nev, meret.nev " +
+                string query = string.Format("SELECT szalanyag.id ,tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero " +
                     "FROM szalanyag " +
                     "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
                     "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
@@ -119,8 +120,9 @@ namespace szalkezelo
 
                         while (reader.Read())
                         {
-                            dt.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1}, {2}, {3})", reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4)));
-                            dt2.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1}, {2}, {3})", reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4)));
+                            Meret m = new Meret(reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetInt32(7));
+                            dt.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1}, {2}, {3})", reader.GetString(1), reader.GetString(2), reader.GetString(3), m.getNev()));
+                            dt2.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1}, {2}, {3})", reader.GetString(1), reader.GetString(2), reader.GetString(3), m.getNev()));
                         }
                     }
                 }

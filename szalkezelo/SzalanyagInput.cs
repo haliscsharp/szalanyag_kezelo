@@ -27,25 +27,22 @@ namespace szalkezelo
         private void fillComboboxes()
         {
             fillCbMeret();
+            fillCbSzuroMeret();
             fillCbAnyag();
             fillCbMinoseg();
             fillCbTipus();
         }
 
-        private void fillCbMeret()
+        private void fillCbSzuroMeret()
         {
             DataTable dt = new DataTable();
-            DataTable dt2 = new DataTable();
 
             dt.Columns.Add("id");
             dt.Columns.Add("nev");
 
-            dt2.Columns.Add("id");
-            dt2.Columns.Add("nev");
-
             try
             {
-                string query = "SELECT id, nev FROM meret;";
+                string query = "SELECT id, szelesseg, magassag, vastagsag, atmero FROM meret;";
 
                 openConnection();
                 using (SqlCommand command = new SqlCommand(query, conn))
@@ -54,28 +51,100 @@ namespace szalkezelo
                     {
                         dt.Rows.Clear();
                         dt.Rows.Add(-1, "<üres>");
-                        dt2.Rows.Clear();
-                        dt2.Rows.Add(-1, "<üres>");
 
                         while (reader.Read())
                         {
-                            dt.Rows.Add(reader.GetInt32(0), reader.GetString(1));
-                            dt2.Rows.Add(reader.GetInt32(0), reader.GetString(1));
+                            Meret m = new Meret(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4));
+                            dt.Rows.Add(reader.GetInt32(0), m.getNev());
                         }
                     }
                 }
 
                 cbSzuroMeret.SelectedIndexChanged -= Szuro_SelectedIndexChanged;
 
-                cbMeret.DataSource = dt;
-                cbMeret.ValueMember = "id";
-                cbMeret.DisplayMember = "nev";
-
-                cbSzuroMeret.DataSource = dt2;
+                cbSzuroMeret.DataSource = dt;
                 cbSzuroMeret.ValueMember = "id";
                 cbSzuroMeret.DisplayMember = "nev";
 
                 cbSzuroMeret.SelectedIndexChanged += Szuro_SelectedIndexChanged;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Hiba történt a méret lista frissítése során!\n\n" + e.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void fillCbMeret()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("id");
+            dt.Columns.Add("nev");
+
+            try
+            {
+                bool[] sizeFilters = new bool[4];
+
+                for (int i = 0; i < sizeFilters.Length; i++)
+                {
+                    sizeFilters[i] = true;
+                }
+
+                if (cbTipus.SelectedValue != null && int.Parse(cbTipus.SelectedValue.ToString()) != -1)
+                {
+                    string query = string.Format("SELECT kellSzelesseg, kellMagassag, kellVastagsag, kellAtmero FROM tipus " +
+                           "WHERE id = {0};", cbTipus.SelectedValue);
+
+                    openConnection();
+                    using (SqlCommand command = new SqlCommand(query, conn))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            reader.Read();
+                            sizeFilters[0] = reader.GetBoolean(0);
+                            sizeFilters[1] = reader.GetBoolean(1);
+                            sizeFilters[2] = reader.GetBoolean(2);
+                            sizeFilters[3] = reader.GetBoolean(3);
+                        }
+                    }
+                }
+                string readquery = "SELECT id, szelesseg, magassag, vastagsag, atmero FROM meret ;";
+
+                openConnection();
+                using (SqlCommand command = new SqlCommand(readquery, conn))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        dt.Rows.Clear();
+                        dt.Rows.Add(-1, "<üres>");
+
+                        while (reader.Read())
+                        {
+                            Meret m = new Meret(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4));
+                            
+                            bool matchingRequirements = true;
+                            if ((sizeFilters[0] && m.getSzelesseg() == 0) || (!sizeFilters[0] && m.getSzelesseg() != 0))
+                                matchingRequirements = false;
+                            if ((sizeFilters[1] && m.getMagassag() == 0) || (!sizeFilters[1] && m.getMagassag() != 0))
+                                matchingRequirements = false;
+                            if ((sizeFilters[2] && m.getVastagsag() == 0) || (!sizeFilters[2] && m.getVastagsag() != 0))
+                                matchingRequirements = false;
+                            if ((sizeFilters[3] && m.getAtmero() == 0) || (!sizeFilters[3] && m.getAtmero() != 0))
+                                matchingRequirements = false;
+
+                            if (matchingRequirements)
+                                dt.Rows.Add(reader.GetInt32(0), m.getNev());
+                        }
+                    }
+                }
+
+                cbMeret.DataSource = dt;
+                cbMeret.ValueMember = "id";
+                cbMeret.DisplayMember = "nev";
             }
             catch (Exception e)
             {
@@ -231,6 +300,7 @@ namespace szalkezelo
                 }
 
                 cbSzuroTipus.SelectedIndexChanged -= Szuro_SelectedIndexChanged;
+                cbTipus.SelectedIndexChanged -= cbTipus_SelectedIndexChanged;
 
                 cbTipus.DataSource = dt;
                 cbTipus.ValueMember = "id";
@@ -241,6 +311,7 @@ namespace szalkezelo
                 cbSzuroTipus.DisplayMember = "nev";
 
                 cbSzuroTipus.SelectedIndexChanged += Szuro_SelectedIndexChanged;
+                cbTipus.SelectedIndexChanged += cbTipus_SelectedIndexChanged;
             }
             catch (Exception e)
             {
@@ -347,7 +418,7 @@ namespace szalkezelo
                     filters += " tipus.id = " + cbSzuroTipus.SelectedValue;
                 }
 
-                string query = string.Format("SELECT meret.nev, anyag.nev, anyag.rovid, anyagminoseg.nev, tipus.nev " +
+                string query = string.Format("SELECT meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero, anyag.nev, anyag.rovid, anyagminoseg.nev, tipus.nev " +
                     "FROM szalanyag " +
                     "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
                     "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
@@ -362,7 +433,8 @@ namespace szalkezelo
                         dgwSzalanyag.Rows.Clear();
                         while (reader.Read())
                         {
-                            dgwSzalanyag.Rows.Add(reader.GetString(0), string.Format("{0} ({1})", reader.GetString(1), reader.GetString(2)), reader.GetString(3), reader.GetString(4));
+                            Meret m = new Meret(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3));
+                            dgwSzalanyag.Rows.Add(m.getNev(), string.Format("{0} ({1})", reader.GetString(4), reader.GetString(5)), reader.GetString(6), reader.GetString(7));
                         }
                     }
                 }
@@ -416,6 +488,12 @@ namespace szalkezelo
         private void Szuro_SelectedIndexChanged(object sender, EventArgs e)
         {
             fillTable();
+        }
+
+        private void cbTipus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (int.Parse(cbTipus.SelectedValue.ToString()) != -1)
+                fillCbMeret();
         }
     }
 }

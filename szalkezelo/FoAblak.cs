@@ -50,7 +50,7 @@ namespace szalkezelo
                 filters = "WHERE szalanyag.id = " + cbSzuroSzalanyag.SelectedValue;
             }
 
-            string query = "SELECT tipus.nev, anyag.nev, meret.nev, anyagminoseg.nev, raktar.db, raktar.hossz " +
+            string query = "SELECT tipus.nev, anyag.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero, anyagminoseg.nev, raktar.db, raktar.hossz " +
                 "FROM raktar " +
                 "INNER JOIN szalanyag ON raktar.szalanyag_id = szalanyag.id " +
                 "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
@@ -68,7 +68,8 @@ namespace szalkezelo
                         dgwRaktar.Rows.Clear();
                         while (reader.Read())
                         {
-                            dgwRaktar.Rows.Add(string.Format("{0} ({1}, {2}, {3})", reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3)), reader.GetInt32(4), reader.GetInt32(5));
+                            Meret m = new Meret(reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
+                            dgwRaktar.Rows.Add(string.Format("{0} ({1}, {2}, {3})", reader.GetString(0), reader.GetString(1), m.getNev(), reader.GetString(6)), reader.GetInt32(7), reader.GetInt32(8));
                         }
                     }
                 }
@@ -92,7 +93,7 @@ namespace szalkezelo
 
             try
             {
-                string query = string.Format("SELECT szalanyag.id ,tipus.nev, anyag.rovid, anyagminoseg.nev, meret.nev " +
+                string query = string.Format("SELECT szalanyag.id ,tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero " +
                     "FROM szalanyag " +
                     "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
                     "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
@@ -109,7 +110,8 @@ namespace szalkezelo
 
                         while (reader.Read())
                         {
-                            dt.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1}, {2}, {3})", reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4)));
+                            Meret m = new Meret(reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetInt32(7));
+                            dt.Rows.Add(reader.GetInt32(0), string.Format("{0} ({1}, {2}, {3})", reader.GetString(1), reader.GetString(2), reader.GetString(3), m.getNev()));
                         }
                     }
                 }
@@ -167,9 +169,9 @@ namespace szalkezelo
 
         private void TsmMeret_Click(object sender, EventArgs e)
         {
-            SimpleNameInput sni = new SimpleNameInput("meret");
+            MeretInput mi = new MeretInput();
 
-            sni.ShowDialog();
+            mi.ShowDialog();
         }
 
         private void TsmAnyag_Click(object sender, EventArgs e)
@@ -188,9 +190,9 @@ namespace szalkezelo
 
         private void TsmTipus_Click(object sender, EventArgs e)
         {
-            SimpleNameInput sni = new SimpleNameInput("tipus");
+            TipusInput ti = new TipusInput();
 
-            sni.ShowDialog();
+            ti.ShowDialog();
         }
     }
 }
