@@ -11,6 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="VagaslistaInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Bevetelezes.cs">
       <SubType>Form</SubType>
     </Compile>

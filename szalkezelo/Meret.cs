@@ -27,7 +27,7 @@ namespace szalkezelo
                 return string.Format("{0}⌀", atmero);
 
             if (vastagsag != 0)
-                return string.Format("{0}x{1}x{2}", szelesseg, magassag, atmero);
+                return string.Format("{0}x{1}x{2}", szelesseg, magassag, vastagsag);
 
             return string.Format("{0}x{1}", szelesseg, magassag);
         }

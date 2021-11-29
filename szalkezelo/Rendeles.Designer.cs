@@ -29,10 +29,11 @@ namespace szalkezelo
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gbSzurok = new System.Windows.Forms.GroupBox();
             this.btnSzuro = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.chkSzuroTeljesitett = new System.Windows.Forms.CheckBox();
+            this.chkSzuroNemTeljesitett = new System.Windows.Forms.CheckBox();
             this.chkSzuroDatumIg = new System.Windows.Forms.CheckBox();
             this.chkSzuroDatumTol = new System.Windows.Forms.CheckBox();
             this.dtpSzuroIg = new System.Windows.Forms.DateTimePicker();
@@ -40,31 +41,36 @@ namespace szalkezelo
             this.txtSzuroNev = new System.Windows.Forms.TextBox();
             this.lblSzuroNev = new System.Windows.Forms.Label();
             this.gbFelvitel = new System.Windows.Forms.GroupBox();
+            this.nudSurgosseg = new System.Windows.Forms.NumericUpDown();
             this.lbVagaslista = new System.Windows.Forms.ListBox();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.lblVagaslista = new System.Windows.Forms.Label();
             this.lblDatum = new System.Windows.Forms.Label();
+            this.lblSurgosseg = new System.Windows.Forms.Label();
             this.lblNev = new System.Windows.Forms.Label();
             this.txtNev = new System.Windows.Forms.TextBox();
             this.btnVagasEltavolitasa = new System.Windows.Forms.Button();
             this.btnUjVagas = new System.Windows.Forms.Button();
             this.btnFelvitel = new System.Windows.Forms.Button();
-            this.dgwBevetelezes = new System.Windows.Forms.DataGridView();
+            this.dgwRendeles = new System.Windows.Forms.DataGridView();
             this.teljesitett = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.rendelo_nev = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.datum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.surgosseg = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vagaslista = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.vagaslista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnTeljesites = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.gbSzurok.SuspendLayout();
             this.gbFelvitel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwBevetelezes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSurgosseg)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwRendeles)).BeginInit();
             this.SuspendLayout();
             // 
             // gbSzurok
             // 
             this.gbSzurok.Controls.Add(this.btnSzuro);
-            this.gbSzurok.Controls.Add(this.checkBox1);
-            this.gbSzurok.Controls.Add(this.checkBox2);
+            this.gbSzurok.Controls.Add(this.chkSzuroTeljesitett);
+            this.gbSzurok.Controls.Add(this.chkSzuroNemTeljesitett);
             this.gbSzurok.Controls.Add(this.chkSzuroDatumIg);
             this.gbSzurok.Controls.Add(this.chkSzuroDatumTol);
             this.gbSzurok.Controls.Add(this.dtpSzuroIg);
@@ -87,30 +93,33 @@ namespace szalkezelo
             this.btnSzuro.Tag = "";
             this.btnSzuro.Text = "Szűrés";
             this.btnSzuro.UseVisualStyleBackColor = true;
+            this.btnSzuro.Click += new System.EventHandler(this.btnSzuro_Click);
             // 
-            // checkBox1
+            // chkSzuroTeljesitett
             // 
-            this.checkBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox1.Location = new System.Drawing.Point(10, 69);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(126, 30);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.Text = "Teljesített";
-            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkSzuroTeljesitett.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkSzuroTeljesitett.Location = new System.Drawing.Point(10, 69);
+            this.chkSzuroTeljesitett.Name = "chkSzuroTeljesitett";
+            this.chkSzuroTeljesitett.Size = new System.Drawing.Size(126, 30);
+            this.chkSzuroTeljesitett.TabIndex = 10;
+            this.chkSzuroTeljesitett.Text = "Teljesített";
+            this.chkSzuroTeljesitett.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkSzuroTeljesitett.UseVisualStyleBackColor = true;
+            this.chkSzuroTeljesitett.CheckedChanged += new System.EventHandler(this.TeljesitettSzuro_CheckedChanged);
             // 
-            // checkBox2
+            // chkSzuroNemTeljesitett
             // 
-            this.checkBox2.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(154, 69);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(154, 30);
-            this.checkBox2.TabIndex = 10;
-            this.checkBox2.Text = "Nem teljesített";
-            this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.chkSzuroNemTeljesitett.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkSzuroNemTeljesitett.Checked = true;
+            this.chkSzuroNemTeljesitett.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSzuroNemTeljesitett.Location = new System.Drawing.Point(154, 69);
+            this.chkSzuroNemTeljesitett.Name = "chkSzuroNemTeljesitett";
+            this.chkSzuroNemTeljesitett.Size = new System.Drawing.Size(154, 30);
+            this.chkSzuroNemTeljesitett.TabIndex = 10;
+            this.chkSzuroNemTeljesitett.Text = "Nem teljesített";
+            this.chkSzuroNemTeljesitett.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkSzuroNemTeljesitett.UseVisualStyleBackColor = true;
+            this.chkSzuroNemTeljesitett.CheckedChanged += new System.EventHandler(this.TeljesitettSzuro_CheckedChanged);
             // 
             // chkSzuroDatumIg
             // 
@@ -172,10 +181,12 @@ namespace szalkezelo
             // 
             // gbFelvitel
             // 
+            this.gbFelvitel.Controls.Add(this.nudSurgosseg);
             this.gbFelvitel.Controls.Add(this.lbVagaslista);
             this.gbFelvitel.Controls.Add(this.dtpDate);
             this.gbFelvitel.Controls.Add(this.lblVagaslista);
             this.gbFelvitel.Controls.Add(this.lblDatum);
+            this.gbFelvitel.Controls.Add(this.lblSurgosseg);
             this.gbFelvitel.Controls.Add(this.lblNev);
             this.gbFelvitel.Controls.Add(this.txtNev);
             this.gbFelvitel.Controls.Add(this.btnVagasEltavolitasa);
@@ -183,34 +194,57 @@ namespace szalkezelo
             this.gbFelvitel.Controls.Add(this.btnFelvitel);
             this.gbFelvitel.Location = new System.Drawing.Point(874, 136);
             this.gbFelvitel.Name = "gbFelvitel";
-            this.gbFelvitel.Size = new System.Drawing.Size(428, 314);
+            this.gbFelvitel.Size = new System.Drawing.Size(428, 349);
             this.gbFelvitel.TabIndex = 6;
             this.gbFelvitel.TabStop = false;
             this.gbFelvitel.Text = "Új elem felvitele";
             // 
+            // nudSurgosseg
+            // 
+            this.nudSurgosseg.Location = new System.Drawing.Point(149, 87);
+            this.nudSurgosseg.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.nudSurgosseg.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudSurgosseg.Name = "nudSurgosseg";
+            this.nudSurgosseg.Size = new System.Drawing.Size(67, 27);
+            this.nudSurgosseg.TabIndex = 10;
+            this.nudSurgosseg.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // lbVagaslista
             // 
             this.lbVagaslista.FormattingEnabled = true;
+            this.lbVagaslista.HorizontalScrollbar = true;
             this.lbVagaslista.ItemHeight = 20;
-            this.lbVagaslista.Location = new System.Drawing.Point(103, 127);
+            this.lbVagaslista.Location = new System.Drawing.Point(14, 155);
             this.lbVagaslista.Name = "lbVagaslista";
-            this.lbVagaslista.Size = new System.Drawing.Size(310, 124);
+            this.lbVagaslista.Size = new System.Drawing.Size(399, 124);
             this.lbVagaslista.TabIndex = 9;
             // 
             // dtpDate
             // 
             this.dtpDate.CustomFormat = "yyyy. MM. dd. HH:mm";
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDate.Location = new System.Drawing.Point(103, 54);
+            this.dtpDate.Location = new System.Drawing.Point(149, 54);
             this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(310, 27);
+            this.dtpDate.Size = new System.Drawing.Size(264, 27);
             this.dtpDate.TabIndex = 8;
             // 
             // lblVagaslista
             // 
-            this.lblVagaslista.Location = new System.Drawing.Point(6, 96);
+            this.lblVagaslista.Location = new System.Drawing.Point(6, 124);
             this.lblVagaslista.Name = "lblVagaslista";
-            this.lblVagaslista.Size = new System.Drawing.Size(91, 25);
+            this.lblVagaslista.Size = new System.Drawing.Size(137, 25);
             this.lblVagaslista.TabIndex = 6;
             this.lblVagaslista.Text = "Vágáslista:";
             this.lblVagaslista.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -219,49 +253,60 @@ namespace szalkezelo
             // 
             this.lblDatum.Location = new System.Drawing.Point(6, 56);
             this.lblDatum.Name = "lblDatum";
-            this.lblDatum.Size = new System.Drawing.Size(91, 25);
+            this.lblDatum.Size = new System.Drawing.Size(137, 25);
             this.lblDatum.TabIndex = 6;
             this.lblDatum.Text = "Dátum:";
             this.lblDatum.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lblSurgosseg
+            // 
+            this.lblSurgosseg.Location = new System.Drawing.Point(6, 89);
+            this.lblSurgosseg.Name = "lblSurgosseg";
+            this.lblSurgosseg.Size = new System.Drawing.Size(137, 25);
+            this.lblSurgosseg.TabIndex = 6;
+            this.lblSurgosseg.Text = "Sürgősség (1-5):";
+            this.lblSurgosseg.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblNev
             // 
             this.lblNev.Location = new System.Drawing.Point(6, 23);
             this.lblNev.Name = "lblNev";
-            this.lblNev.Size = new System.Drawing.Size(91, 25);
+            this.lblNev.Size = new System.Drawing.Size(137, 25);
             this.lblNev.TabIndex = 6;
             this.lblNev.Text = "Név:";
             this.lblNev.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtNev
             // 
-            this.txtNev.Location = new System.Drawing.Point(103, 21);
+            this.txtNev.Location = new System.Drawing.Point(149, 21);
             this.txtNev.MaxLength = 50;
             this.txtNev.Name = "txtNev";
-            this.txtNev.Size = new System.Drawing.Size(310, 27);
+            this.txtNev.Size = new System.Drawing.Size(264, 27);
             this.txtNev.TabIndex = 5;
             // 
             // btnVagasEltavolitasa
             // 
-            this.btnVagasEltavolitasa.Location = new System.Drawing.Point(261, 92);
+            this.btnVagasEltavolitasa.Location = new System.Drawing.Point(284, 120);
             this.btnVagasEltavolitasa.Name = "btnVagasEltavolitasa";
-            this.btnVagasEltavolitasa.Size = new System.Drawing.Size(152, 29);
+            this.btnVagasEltavolitasa.Size = new System.Drawing.Size(129, 29);
             this.btnVagasEltavolitasa.TabIndex = 2;
             this.btnVagasEltavolitasa.Text = "Vágás eltávolítása";
             this.btnVagasEltavolitasa.UseVisualStyleBackColor = true;
+            this.btnVagasEltavolitasa.Click += new System.EventHandler(this.btnVagasEltavolitasa_Click);
             // 
             // btnUjVagas
             // 
-            this.btnUjVagas.Location = new System.Drawing.Point(103, 92);
+            this.btnUjVagas.Location = new System.Drawing.Point(149, 120);
             this.btnUjVagas.Name = "btnUjVagas";
-            this.btnUjVagas.Size = new System.Drawing.Size(152, 29);
+            this.btnUjVagas.Size = new System.Drawing.Size(129, 29);
             this.btnUjVagas.TabIndex = 2;
             this.btnUjVagas.Text = "Új vágás";
             this.btnUjVagas.UseVisualStyleBackColor = true;
+            this.btnUjVagas.Click += new System.EventHandler(this.btnUjVagas_Click);
             // 
             // btnFelvitel
             // 
-            this.btnFelvitel.Location = new System.Drawing.Point(319, 267);
+            this.btnFelvitel.Location = new System.Drawing.Point(319, 302);
             this.btnFelvitel.Name = "btnFelvitel";
             this.btnFelvitel.Size = new System.Drawing.Size(94, 29);
             this.btnFelvitel.TabIndex = 2;
@@ -269,27 +314,36 @@ namespace szalkezelo
             this.btnFelvitel.UseVisualStyleBackColor = true;
             this.btnFelvitel.Click += new System.EventHandler(this.btnFelvitel_Click);
             // 
-            // dgwBevetelezes
+            // dgwRendeles
             // 
-            this.dgwBevetelezes.AllowUserToAddRows = false;
-            this.dgwBevetelezes.AllowUserToDeleteRows = false;
-            this.dgwBevetelezes.AllowUserToOrderColumns = true;
-            this.dgwBevetelezes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgwBevetelezes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwBevetelezes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgwRendeles.AllowUserToAddRows = false;
+            this.dgwRendeles.AllowUserToDeleteRows = false;
+            this.dgwRendeles.AllowUserToOrderColumns = true;
+            this.dgwRendeles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgwRendeles.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgwRendeles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwRendeles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.teljesitett,
             this.rendelo_nev,
             this.datum,
             this.surgosseg,
             this.vagaslista});
-            this.dgwBevetelezes.Location = new System.Drawing.Point(12, 136);
-            this.dgwBevetelezes.Name = "dgwBevetelezes";
-            this.dgwBevetelezes.ReadOnly = true;
-            this.dgwBevetelezes.RowHeadersVisible = false;
-            this.dgwBevetelezes.RowHeadersWidth = 51;
-            this.dgwBevetelezes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwBevetelezes.Size = new System.Drawing.Size(856, 314);
-            this.dgwBevetelezes.TabIndex = 5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgwRendeles.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgwRendeles.Location = new System.Drawing.Point(12, 136);
+            this.dgwRendeles.Name = "dgwRendeles";
+            this.dgwRendeles.ReadOnly = true;
+            this.dgwRendeles.RowHeadersVisible = false;
+            this.dgwRendeles.RowHeadersWidth = 51;
+            this.dgwRendeles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgwRendeles.Size = new System.Drawing.Size(856, 349);
+            this.dgwRendeles.TabIndex = 5;
             // 
             // teljesitett
             // 
@@ -329,23 +383,47 @@ namespace szalkezelo
             this.vagaslista.MinimumWidth = 6;
             this.vagaslista.Name = "vagaslista";
             this.vagaslista.ReadOnly = true;
-            this.vagaslista.Width = 157;
+            this.vagaslista.Width = 180;
+            // 
+            // btnTeljesites
+            // 
+            this.btnTeljesites.Location = new System.Drawing.Point(704, 491);
+            this.btnTeljesites.Name = "btnTeljesites";
+            this.btnTeljesites.Size = new System.Drawing.Size(164, 49);
+            this.btnTeljesites.TabIndex = 2;
+            this.btnTeljesites.Text = "Kijelölt teljesítése";
+            this.btnTeljesites.UseVisualStyleBackColor = true;
+            this.btnTeljesites.Click += new System.EventHandler(this.btnFelvitel_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(528, 501);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(130, 29);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Rendelés törlése";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnFelvitel_Click);
             // 
             // Rendeles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1314, 462);
+            this.ClientSize = new System.Drawing.Size(1314, 552);
             this.Controls.Add(this.gbSzurok);
             this.Controls.Add(this.gbFelvitel);
-            this.Controls.Add(this.dgwBevetelezes);
+            this.Controls.Add(this.dgwRendeles);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnTeljesites);
             this.Name = "Rendeles";
             this.Text = "Rendelés";
+            this.Load += new System.EventHandler(this.Rendeles_Load);
             this.gbSzurok.ResumeLayout(false);
             this.gbSzurok.PerformLayout();
             this.gbFelvitel.ResumeLayout(false);
             this.gbFelvitel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwBevetelezes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSurgosseg)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwRendeles)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -366,17 +444,21 @@ namespace szalkezelo
         private System.Windows.Forms.Label lblNev;
         private System.Windows.Forms.TextBox txtNev;
         private System.Windows.Forms.Button btnFelvitel;
-        private System.Windows.Forms.DataGridView dgwBevetelezes;
+        private System.Windows.Forms.DataGridView dgwRendeles;
         private System.Windows.Forms.ListBox lbVagaslista;
         private System.Windows.Forms.Label lblVagaslista;
+        private System.Windows.Forms.Button btnVagasEltavolitasa;
+        private System.Windows.Forms.Button btnUjVagas;
+        private System.Windows.Forms.CheckBox chkSzuroTeljesitett;
+        private System.Windows.Forms.CheckBox chkSzuroNemTeljesitett;
+        private System.Windows.Forms.NumericUpDown nudSurgosseg;
+        private System.Windows.Forms.Label lblSurgosseg;
         private System.Windows.Forms.DataGridViewCheckBoxColumn teljesitett;
         private System.Windows.Forms.DataGridViewTextBoxColumn rendelo_nev;
         private System.Windows.Forms.DataGridViewTextBoxColumn datum;
         private System.Windows.Forms.DataGridViewTextBoxColumn surgosseg;
-        private System.Windows.Forms.DataGridViewComboBoxColumn vagaslista;
-        private System.Windows.Forms.Button btnVagasEltavolitasa;
-        private System.Windows.Forms.Button btnUjVagas;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vagaslista;
+        private System.Windows.Forms.Button btnTeljesites;
+        private System.Windows.Forms.Button button1;
     }
 }
