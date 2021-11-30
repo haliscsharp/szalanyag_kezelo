@@ -81,7 +81,7 @@ namespace szalkezelo
                     filters += string.Format(" r.teljesitett = 0");
                 }
 
-                string query = string.Format("SELECT r.teljesitett, r.rendelo_nev, r.datum, r.surgosseg " +
+                string query = string.Format("SELECT r.id, r.teljesitett, r.rendelo_nev, r.datum, r.surgosseg " +
                     "FROM rendeles as r " + (filters.Length > 0 ? "WHERE " + filters : "") + ";");
 
                 openConnection();
@@ -92,22 +92,40 @@ namespace szalkezelo
                         dgwRendeles.Rows.Clear();
                         while (reader.Read())
                         {
-                            dgwRendeles.Rows.Add(reader.GetBoolean(0), reader.GetString(1), reader.GetDateTime(2), reader.GetInt32(3));
+                            dgwRendeles.Rows.Add(reader.GetInt32(0), reader.GetBoolean(1), reader.GetString(2), reader.GetDateTime(3), reader.GetInt32(4));
                         }
                     }
                 }
 
-                dgwRendeles.Rows[0].Cells[4].Value = "Halis\nCodos és mellé egy nagyon hosszú szöveg\nKowa";
-                // string.Format("{0} x {1} x {2}", reader.GetInt32(4), reader.GetInt32(5), string.Format("{0} ({1}, {2}, {3})", reader.GetString(6), reader.GetString(7), reader.GetString(8), m.getNev()))
+                for (int i = 0; i < dgwRendeles.Rows.Count; i++)
+                {
+                    int rendeles_id = Convert.ToInt32(dgwRendeles.Rows[i].Cells[0].Value.ToString());
 
-                // Meret m = new Meret(reader.GetInt32(9), reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12));
+                    query = string.Format("SELECT v.db, v.hossz, v.feluletkezeles, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero " +
+                        "FROM vagaslista as v " +
+                        "INNER JOIN szalanyag ON v.szalanyag_id = szalanyag.id " +
+                        "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
+                        "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
+                        "INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
+                        "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id " +
+                        "WHERE v.rendeles_id = {0};", rendeles_id);
 
-                //"INNER JOIN vagaslista as v ON v.rendeles_id = r.id " +
-                //"INNER JOIN szalanyag ON v.szalanyag_id = szalanyag.id " +
-                //"INNER JOIN meret ON szalanyag.meret_id = meret.id " +
-                //"INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
-                //"INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
-                //"INNER JOIN tipus ON szalanyag.tipus_id = tipus.id "
+                    using (SqlCommand command = new SqlCommand(query, conn))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Meret m = new Meret(reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9));
+                                dgwRendeles.Rows[i].Cells[5].Value += string.Format("- {0} x {1} x {2} {3}\n", 
+                                    reader.GetInt32(0), 
+                                    reader.GetInt32(1), 
+                                    string.Format("{0} ({1}, {2}, {3})", reader.GetString(3), reader.GetString(4), reader.GetString(5), m.getNev()),
+                                    (reader.GetBoolean(2)?"+ felületkezelés":""));
+                            }
+                        }
+                    }
+                }
 
             }
             catch (Exception e)
@@ -132,7 +150,8 @@ namespace szalkezelo
             {
                 int rendelesId = -1;
 
-                string insertquery = string.Format("INSERT INTO rendeles(rendelo_nev, datum, surgosseg, teljesitett) VALUES('{0}', '{1}', {2}, {3});",
+                string insertquery = string.Format("INSERT INTO rendeles(rendelo_nev, datum, surgosseg, teljesitett) VALUES('{0}', '{1}', {2}, {3});" +
+                    " SELECT CAST(scope_identity() AS int)",
                     txtNev.Text,
                     string.Format("{0}-{1}-{2} {3}:{4}", dtpDate.Value.Year, dtpDate.Value.Month, dtpDate.Value.Day, dtpDate.Value.Hour, dtpDate.Value.Minute),
                     nudSurgosseg.Value,
@@ -143,19 +162,41 @@ namespace szalkezelo
                 using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
                 {
                     rendelesId = Convert.ToInt32(insertCommand.ExecuteScalar());
-
-                    conn.Close();
-
-                    txtNev.Text = "";
-                    dtpDate.Value = DateTime.Now;
-                    nudSurgosseg.Value = 1;
-                    lbVagaslista.Items.Clear();
-                    vagaslistaFelvetel.Clear();
-
-                    fillTable();
                 }
 
-                MessageBox.Show(rendelesId.ToString());
+                int succesfulInserts = 0;
+
+                for (int i = 0; i < vagaslistaFelvetel.Count; i++)
+                {
+                    insertquery = string.Format("INSERT INTO vagaslista(db, hossz, feluletkezeles, szalanyag_id, rendeles_id) VALUES({0}, {1}, {2}, {3}, {4});",
+                        vagaslistaFelvetel[i].db,
+                        vagaslistaFelvetel[i].hossz,
+                        vagaslistaFelvetel[i].feluletkezeles ? 1 : 0,
+                        vagaslistaFelvetel[i].szalanyag_id,
+                        rendelesId);
+
+                    using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
+                    {
+                        int result = insertCommand.ExecuteNonQuery();
+
+                        if (result >= 0)
+                            succesfulInserts++;
+                    }
+                }
+
+                if (succesfulInserts != vagaslistaFelvetel.Count)
+                    MessageBox.Show("Hiba történt az adatbeszúrás közben (vágáslista)!");
+
+
+                conn.Close();
+
+                txtNev.Text = "";
+                dtpDate.Value = DateTime.Now;
+                nudSurgosseg.Value = 1;
+                lbVagaslista.Items.Clear();
+                vagaslistaFelvetel.Clear();
+
+                fillTable();
             }
             catch (Exception ex)
             {
@@ -198,6 +239,69 @@ namespace szalkezelo
         private void btnSzuro_Click(object sender, EventArgs e)
         {
             fillTable();
+        }
+
+        private void btnRendelesTorles_Click(object sender, EventArgs e)
+        {
+            if (Convert.ToBoolean(dgwRendeles.SelectedRows[0].Cells[1].Value) == true)
+            {
+                MessageBox.Show("Csak olyan rendelést lehet törölni, amely még nem volt teljesítve!");
+                return;
+            }
+
+            if (MessageBox.Show("Biztosan törli a kiválasztott rendelést?", "Rendelés törlése", MessageBoxButtons.YesNo) == DialogResult.No)
+                return;
+
+            int rendeles_id = Convert.ToInt32(dgwRendeles.SelectedRows[0].Cells[0].Value.ToString());
+            try
+            {
+                string deletequery = string.Format("DELETE FROM rendeles " +
+                    "WHERE id = {0};", rendeles_id);
+
+                bool successful = true;
+                openConnection();
+                using (SqlCommand insertCommand = new SqlCommand(deletequery, conn))
+                {
+                    int result = insertCommand.ExecuteNonQuery();
+
+                    if (result < 0)
+                        successful = false;
+                }
+
+                if (successful)
+                {
+                    deletequery = string.Format("DELETE FROM vagaslista " +
+                    "WHERE rendeles_id = {0};", rendeles_id);
+
+                    using (SqlCommand insertCommand = new SqlCommand(deletequery, conn))
+                    {
+                        int result = insertCommand.ExecuteNonQuery();
+
+                        if (result < 0)
+                            successful = false;
+                    }
+
+                    if (successful)
+                        MessageBox.Show("Sikeres törlés!");
+                    else
+                        MessageBox.Show("Sikertelen törlés!");
+
+                    fillTable();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba történt a törlés közben!\n\n" + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void btnRendelesTeljesites_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

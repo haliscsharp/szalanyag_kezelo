@@ -35,7 +35,7 @@ namespace szalkezelo
             {
                 conn.Open();
             }
-            else
+            else if (!isInitialized || conn.State != ConnectionState.Open)
             {
                 try
                 {
