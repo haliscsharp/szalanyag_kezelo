@@ -149,6 +149,8 @@ namespace szalkezelo
             Rendeles re = new Rendeles();
 
             re.ShowDialog();
+
+            fillTable();
         }
 
         private void TsmBevetelezes_Click(object sender, EventArgs e)

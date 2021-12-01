@@ -349,7 +349,7 @@ namespace szalkezelo
                 List<maradek> raktarMaradek = new List<maradek>();
                 List<int[]> raktarHiany = new List<int[]>();
 
-
+                // vágások teljesíthetőségének vizsgálata
                 bool success = true;
                 for (int i = 0; i < vagasok.Count; i++)
                 {
@@ -433,6 +433,7 @@ namespace szalkezelo
                     }
                 }
 
+                // Változtatások végrehajtása
                 if (success)
                 {
                     foreach (var v in raktarVagat)
@@ -487,6 +488,75 @@ namespace szalkezelo
                     using (SqlCommand insertCommand = new SqlCommand(query, conn))
                     {
                         insertCommand.ExecuteNonQuery();
+                    }
+
+                    // maradék hozzáadása raktárhoz
+                    for (int i = 0; i < raktarMaradek.Count; i++)
+                    {
+
+                        string readquery = string.Format("SELECT raktar.id, raktar.db, raktar.hossz, raktar.szalanyag_id " +
+                            "FROM raktar " +
+                            "WHERE raktar.szalanyag_id = {0} AND raktar.hossz = {1};", raktarMaradek[i].szalanyagId, raktarMaradek[i].hossz);
+
+                        Dictionary<string, int> storageData = new Dictionary<string, int>(4);
+
+                        bool alreadyExists = true;
+
+                        using (SqlCommand readCommand = new SqlCommand(readquery, conn))
+                        {
+                            using (SqlDataReader reader = readCommand.ExecuteReader())
+                            {
+                                if (reader.HasRows)
+                                {
+                                    reader.Read();
+
+                                    storageData["id"] = reader.GetInt32(0);
+                                    storageData["db"] = reader.GetInt32(1);
+                                    storageData["hossz"] = reader.GetInt32(2);
+                                    storageData["szalanyag_id"] = reader.GetInt32(3);
+                                }
+                                else
+                                {
+                                    alreadyExists = false;
+                                }
+                            }
+                        }
+
+                        string insertquery;
+
+                        if (alreadyExists)
+                        {
+                            insertquery = string.Format("UPDATE raktar SET db = {0} WHERE id = {1};",
+                                storageData["db"] + 1,
+                                storageData["id"]);
+
+                            using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
+                            {
+                                int result = insertCommand.ExecuteNonQuery();
+
+                                if (result < 0)
+                                {
+                                    MessageBox.Show("Hiba adatmódosítás közben!");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            insertquery = string.Format("INSERT INTO raktar(db, hossz, szalanyag_id) VALUES({0}, {1}, {2});",
+                                1,
+                                raktarMaradek[i].hossz,
+                                raktarMaradek[i].szalanyagId);
+
+                            using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
+                            {
+                                int result = insertCommand.ExecuteNonQuery();
+
+                                if (result < 0)
+                                {
+                                    MessageBox.Show("Hiba adatbeszúrás közben!");
+                                }
+                            }
+                        }
                     }
 
                     MessageBox.Show("Rendelés teljesítve!");
