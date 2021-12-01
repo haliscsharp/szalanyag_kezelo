@@ -82,7 +82,8 @@ namespace szalkezelo
                 }
 
                 string query = string.Format("SELECT r.id, r.teljesitett, r.rendelo_nev, r.datum, r.surgosseg " +
-                    "FROM rendeles as r " + (filters.Length > 0 ? "WHERE " + filters : "") + ";");
+                    "FROM rendeles as r " + (filters.Length > 0 ? "WHERE " + filters : "") + " " +
+                    "ORDER BY r.surgosseg DESC;");
 
                 openConnection();
                 using (SqlCommand command = new SqlCommand(query, conn))
@@ -299,9 +300,209 @@ namespace szalkezelo
             }
         }
 
+        struct maradek
+        {
+            public int raktarId;
+            public int szalanyagId;
+            public int hossz;
+        }
+
         private void btnRendelesTeljesites_Click(object sender, EventArgs e)
         {
-            
+            if (Convert.ToBoolean(dgwRendeles.SelectedRows[0].Cells[1].Value) == true)
+            {
+                MessageBox.Show("Csak olyan rendelést teljesíteni, amely még nem volt teljesítve!");
+                return;
+            }
+
+            int rendeles_id = Convert.ToInt32(dgwRendeles.SelectedRows[0].Cells[0].Value.ToString());
+
+            try
+            {
+                string query = string.Format("SELECT v.db, v.hossz, v.feluletkezeles, v.szalanyag_id " +
+                    "FROM vagaslista as v " +
+                    "WHERE rendeles_id = {0} " +
+                    "ORDER BY v.hossz DESC;", rendeles_id);
+
+                List<vagas> vagasok = new List<vagas>();
+
+                openConnection();
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            vagas temp;
+                            temp.db = reader.GetInt32(0);
+                            temp.hossz = reader.GetInt32(1);
+                            temp.feluletkezeles = reader.GetBoolean(2);
+                            temp.szalanyag_id = reader.GetInt32(3);
+
+                            vagasok.Add(temp);
+                        }
+                    }
+                }
+
+                Dictionary<int, int> raktarVagat = new Dictionary<int, int>();
+                Dictionary<int, int> maradekVagat = new Dictionary<int, int>();
+                List<maradek> raktarMaradek = new List<maradek>();
+                List<int[]> raktarHiany = new List<int[]>();
+
+
+                bool success = true;
+                for (int i = 0; i < vagasok.Count; i++)
+                {
+                    for (int j = 0; j < vagasok[i].db; j++)
+                    {
+                        int m = 0;
+                        while (m < raktarMaradek.Count && (raktarMaradek[m].szalanyagId != vagasok[i].szalanyag_id || raktarMaradek[m].hossz < vagasok[i].hossz))
+                        {
+                            m++;
+                        }
+
+                        if (m < raktarMaradek.Count)
+                        {
+                            if (maradekVagat.ContainsKey(m))
+                                maradekVagat[m] += 1;
+                            else
+                                maradekVagat[m] = 1;
+
+                            maradek tempMaradek;
+                            tempMaradek.raktarId = raktarMaradek[m].raktarId;
+                            tempMaradek.szalanyagId = raktarMaradek[m].szalanyagId;
+                            tempMaradek.hossz = raktarMaradek[m].hossz - vagasok[i].hossz;
+
+                            raktarMaradek[m] = tempMaradek;
+
+                            continue;
+                        }
+
+                        query = string.Format("SELECT TOP(1) id, db, hossz " +
+                        "FROM raktar " +
+                        "WHERE szalanyag_id = {0} AND hossz >= {1} " +
+                        "ORDER BY hossz - {1};", vagasok[i].szalanyag_id, vagasok[i].hossz);
+
+                        openConnection();
+                        using (SqlCommand command = new SqlCommand(query, conn))
+                        {
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (!reader.Read())
+                                {
+                                    success = false;
+
+                                    raktarHiany.Add(new int[] { vagasok[i].szalanyag_id, vagasok[i].hossz });
+
+                                    continue;
+                                }
+
+                                int raktarId = reader.GetInt32(0);
+
+                                if (raktarVagat.ContainsKey(raktarId))
+                                {
+                                    if (reader.GetInt32(1) <= raktarVagat[raktarId])
+                                    {
+                                        success = false;
+
+                                        raktarHiany.Add(new int[] { vagasok[i].szalanyag_id, vagasok[i].hossz });
+                                    }
+                                    else
+                                    {
+                                        raktarVagat[raktarId] += 1;
+
+                                        maradek tempMaradek;
+                                        tempMaradek.raktarId = raktarId;
+                                        tempMaradek.szalanyagId = vagasok[i].szalanyag_id;
+                                        tempMaradek.hossz = reader.GetInt32(2) - vagasok[i].hossz;
+                                        raktarMaradek.Add(tempMaradek);
+                                    }
+                                }
+                                else
+                                {
+                                    raktarVagat[raktarId] = 1;
+
+                                    maradek tempMaradek;
+                                    tempMaradek.raktarId = raktarId;
+                                    tempMaradek.szalanyagId = vagasok[i].szalanyag_id;
+                                    tempMaradek.hossz = reader.GetInt32(2) - vagasok[i].hossz;
+                                    raktarMaradek.Add(tempMaradek);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (success)
+                {
+                    foreach (var v in raktarVagat)
+                    {
+                        query = string.Format("SELECT db " +
+                            "FROM raktar " +
+                            "WHERE id = {0};", v.Key);
+
+                        int raktarDb = -1;
+                        openConnection();
+                        using (SqlCommand command = new SqlCommand(query, conn))
+                        {
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                reader.Read();
+
+                                raktarDb = reader.GetInt32(0);
+                            }
+                        }
+
+
+                        if (raktarDb <= v.Value)
+                        {
+                            string deletequery = string.Format("DELETE FROM raktar " +
+                                "WHERE id = {0};", v.Key);
+
+                            openConnection();
+                            using (SqlCommand insertCommand = new SqlCommand(deletequery, conn))
+                            {
+                                int result = insertCommand.ExecuteNonQuery();
+                            }
+                        }
+                        else
+                        {
+                            string updatequery = string.Format("UPDATE raktar " +
+                                "SET db = {0}" +
+                                "WHERE id = {1};", raktarDb - v.Value, v.Key);
+
+                            openConnection();
+                            using (SqlCommand insertCommand = new SqlCommand(updatequery, conn))
+                            {
+                                int result = insertCommand.ExecuteNonQuery();
+                            }
+                        }
+                    }
+
+                    query = string.Format("UPDATE rendeles " +
+                                "SET teljesitett = 1" +
+                                "WHERE id = {0};", rendeles_id);
+
+                    openConnection();
+                    using (SqlCommand insertCommand = new SqlCommand(query, conn))
+                    {
+                        insertCommand.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Rendelés teljesítve!");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba történt a tábla frissítése során!\n\n" + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
+
     }
 }
