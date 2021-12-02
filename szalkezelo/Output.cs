@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
+using System.IO;
 
 namespace szalkezelo
 {
@@ -66,7 +67,7 @@ namespace szalkezelo
             for (int i = 0; i < raktarOutput.GetLength(0); i++)
             {
                 gfx.DrawRectangle(XPens.Black, widthOffset, 50 + heightOffset + (i + 1) * 15, 250, 15);
-                gfx.DrawString(raktarOutput[i,0], font, XBrushes.Black, new XPoint(widthOffset + 3, heightOffset + 62 + (i + 1) * 15));
+                gfx.DrawString(raktarOutput[i, 0], font, XBrushes.Black, new XPoint(widthOffset + 3, heightOffset + 62 + (i + 1) * 15));
 
                 gfx.DrawRectangle(XPens.Black, widthOffset + 250, 50 + heightOffset + (i + 1) * 15, 125, 15);
                 gfx.DrawString(raktarOutput[i, 1], font, XBrushes.Black, new XPoint(widthOffset + 253, heightOffset + 62 + (i + 1) * 15));
@@ -82,7 +83,21 @@ namespace szalkezelo
             gfx.DrawString("Kezelendő felület: " + Math.Round(kezelendoFelulet, 2).ToString() + " mm2", font, XBrushes.Black, new XPoint(widthOffset + 3, heightOffset + (raktarOutput.GetLength(0) + 2) * 15 + 47));
 
 
-            document.Save(@"rendelés - " + munkaszam + ".pdf");
+            string filename = "rendelés - " + munkaszam;
+            int fileNumber = 0;
+            bool canWrite = false;
+            while (!canWrite)
+            {
+                try
+                {
+                    document.Save(string.Format("{0}{1}.pdf", filename, (fileNumber != 0 ? " (" + fileNumber.ToString() + ")" : "")));
+                    canWrite = true;
+                }
+                catch
+                {
+                    ++fileNumber;
+                }
+            }
         }
 
         public static void hianyOutput(string munkaszam, string rendelo_datum, string rendelo_surgosseg, string[,] raktarhianyOutput, double kezelendoFelulet)
@@ -156,8 +171,21 @@ namespace szalkezelo
             gfx.DrawRectangle(XPens.Black, widthOffset, heightOffset + (raktarhianyOutput.GetLength(0) + 1) * 15 + 50, 500, 15);
             gfx.DrawString("Kezelendő felület: " + Math.Round(kezelendoFelulet, 2).ToString() + " mm2", font, XBrushes.Black, new XPoint(widthOffset + 3, heightOffset + (raktarhianyOutput.GetLength(0) + 2) * 15 + 47));
 
-
-            document.Save(@"hiány bevételezés - " + munkaszam + ".pdf");
+            string filename = "hiány bevételezés - " + munkaszam;
+            int fileNumber = 0;
+            bool canWrite = false;
+            while (!canWrite)
+            {
+                try
+                {
+                    document.Save(string.Format("{0}{1}.pdf", filename, (fileNumber != 0 ? " (" + fileNumber.ToString() + ")" : "")));
+                    canWrite = true;
+                }
+                catch
+                {
+                    ++fileNumber;
+                }
+            }
         }
 
     }

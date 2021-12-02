@@ -84,6 +84,7 @@ namespace szalkezelo
             this.minoseg,
             this.tipus});
             this.dgwSzalanyag.Location = new System.Drawing.Point(12, 135);
+            this.dgwSzalanyag.MultiSelect = false;
             this.dgwSzalanyag.Name = "dgwSzalanyag";
             this.dgwSzalanyag.ReadOnly = true;
             this.dgwSzalanyag.RowHeadersWidth = 51;

@@ -70,6 +70,7 @@ namespace szalkezelo
             this.nev,
             this.rovid});
             this.dgwAnyag.Location = new System.Drawing.Point(12, 12);
+            this.dgwAnyag.MultiSelect = false;
             this.dgwAnyag.Name = "dgwAnyag";
             this.dgwAnyag.ReadOnly = true;
             this.dgwAnyag.RowHeadersWidth = 51;

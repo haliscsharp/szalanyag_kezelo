@@ -64,6 +64,7 @@ namespace szalkezelo
             this.mennyiseg,
             this.hossz});
             this.dgwRaktar.Location = new System.Drawing.Point(12, 113);
+            this.dgwRaktar.MultiSelect = false;
             this.dgwRaktar.Name = "dgwRaktar";
             this.dgwRaktar.ReadOnly = true;
             this.dgwRaktar.RowHeadersWidth = 51;

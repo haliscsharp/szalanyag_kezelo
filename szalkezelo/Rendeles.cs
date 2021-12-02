@@ -101,7 +101,7 @@ namespace szalkezelo
                         dgwRendeles.Rows.Clear();
                         while (reader.Read())
                         {
-                            dgwRendeles.Rows.Add(reader.GetInt32(0), reader.GetBoolean(1), reader.GetString(2), reader.GetDateTime(3), reader.GetInt32(4));
+                            dgwRendeles.Rows.Add(reader.GetInt32(0), reader.GetBoolean(1), getMunkaszamFromId(reader.GetInt32(0)), reader.GetString(2), reader.GetDateTime(3), reader.GetInt32(4));
                         }
                     }
                 }
@@ -126,7 +126,7 @@ namespace szalkezelo
                             while (reader.Read())
                             {
                                 Meret m = new Meret(reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9));
-                                dgwRendeles.Rows[i].Cells[5].Value += string.Format("- {0} x {1} x {2} {3}\n", 
+                                dgwRendeles.Rows[i].Cells[6].Value += string.Format("- {0} x {1} x {2} {3}\n", 
                                     reader.GetInt32(0), 
                                     reader.GetInt32(1), 
                                     string.Format("{0} ({1}, {2}, {3})", reader.GetString(3), reader.GetString(4), reader.GetString(5), m.getNev()),
@@ -308,6 +308,15 @@ namespace szalkezelo
             }
         }
 
+        private string getMunkaszamFromId(int id)
+        {
+            string munkaszam = "SZ";
+            for (int i = 0; i < 4 - id.ToString().Length; i++)
+                munkaszam += "0";
+            munkaszam += id.ToString();
+            return munkaszam;
+        }
+
         private void btnRendelesTeljesites_Click(object sender, EventArgs e)
         {
             if (Convert.ToBoolean(dgwRendeles.SelectedRows[0].Cells[1].Value) == true)
@@ -317,12 +326,9 @@ namespace szalkezelo
             }
 
             int rendeles_id = Convert.ToInt32(dgwRendeles.SelectedRows[0].Cells[0].Value.ToString());
-            string rendelo_datum = dgwRendeles.SelectedRows[0].Cells[3].Value.ToString();
-            string rendelo_surgosseg = dgwRendeles.SelectedRows[0].Cells[4].Value.ToString();
-            string munkaszam = "SZ";
-            for (int i = 0; i < 4 - rendeles_id.ToString().Length; i++)
-                munkaszam += "0";
-            munkaszam += rendeles_id.ToString();
+            string rendelo_datum = dgwRendeles.SelectedRows[0].Cells[4].Value.ToString();
+            string rendelo_surgosseg = dgwRendeles.SelectedRows[0].Cells[5].Value.ToString();
+            string munkaszam = getMunkaszamFromId(rendeles_id);
 
             double kezelendoFelulet = 0;
 

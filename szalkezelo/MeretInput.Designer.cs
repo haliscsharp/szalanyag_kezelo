@@ -65,6 +65,7 @@ namespace szalkezelo
             this.vastagsag,
             this.atmero});
             this.dgwInput.Location = new System.Drawing.Point(12, 12);
+            this.dgwInput.MultiSelect = false;
             this.dgwInput.Name = "dgwInput";
             this.dgwInput.ReadOnly = true;
             this.dgwInput.RowHeadersWidth = 51;

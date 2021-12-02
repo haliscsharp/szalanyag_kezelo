@@ -78,6 +78,7 @@ namespace szalkezelo
             this.kellVastagsag,
             this.kellAtmero});
             this.dgwInput.Location = new System.Drawing.Point(12, 12);
+            this.dgwInput.MultiSelect = false;
             this.dgwInput.Name = "dgwInput";
             this.dgwInput.ReadOnly = true;
             this.dgwInput.RowHeadersVisible = false;
