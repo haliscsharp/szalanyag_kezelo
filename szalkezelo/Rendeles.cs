@@ -324,6 +324,8 @@ namespace szalkezelo
                 munkaszam += "0";
             munkaszam += rendeles_id.ToString();
 
+            double kezelendoFelulet = 0;
+
             try
             {
                 string query = string.Format("SELECT v.db, v.hossz, v.feluletkezeles, v.szalanyag_id, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero " +
@@ -358,6 +360,11 @@ namespace szalkezelo
                                 string.Format("{0} ({1}, {2}, {3})", reader.GetString(4), reader.GetString(5), reader.GetString(6), m.getNev()),
                                 (temp.feluletkezeles ? "+ felületkezelés" : ""));
                             vagasok.Add(temp);
+
+                            if (temp.feluletkezeles)
+                            {
+                                kezelendoFelulet += temp.db * m.getFelulet(temp.hossz);
+                            }
                         }
                     }
                 }
@@ -410,7 +417,14 @@ namespace szalkezelo
                                 {
                                     success = false;
 
-                                    raktarHiany.Add(new int[] { vagasok[i].szalanyag_id, vagasok[i].hossz });
+                                    int k = 0;
+                                    while (k < raktarHiany.Count && (raktarHiany[k][0] != vagasok[i].szalanyag_id || raktarHiany[k][1] != vagasok[i].hossz))
+                                        k++;
+
+                                    if (k < raktarHiany.Count)
+                                        raktarHiany[k][2]++;
+                                    else
+                                        raktarHiany.Add(new int[] { vagasok[i].szalanyag_id, vagasok[i].hossz, 1 });
 
                                     continue;
                                 }
@@ -423,7 +437,14 @@ namespace szalkezelo
                                     {
                                         success = false;
 
-                                        raktarHiany.Add(new int[] { vagasok[i].szalanyag_id, vagasok[i].hossz });
+                                        int k = 0;
+                                        while (k < raktarHiany.Count && (raktarHiany[k][0] != vagasok[i].szalanyag_id || raktarHiany[k][1] != vagasok[i].hossz))
+                                            k++;
+
+                                        if (k < raktarHiany.Count)
+                                            raktarHiany[k][2]++;
+                                        else
+                                            raktarHiany.Add(new int[] { vagasok[i].szalanyag_id, vagasok[i].hossz, 1 });
                                     }
                                     else
                                     {
@@ -608,9 +629,48 @@ namespace szalkezelo
                         }
                     }
 
-                    Output.rendelesOutput(munkaszam, rendelo_datum, rendelo_surgosseg, raktarOutput);
+                    Output.rendelesOutput(munkaszam, rendelo_datum, rendelo_surgosseg, raktarOutput, kezelendoFelulet);
 
                     MessageBox.Show("Rendelés teljesítve!");
+                }
+                else
+                {
+                    if (MessageBox.Show("A rendelés nem teljesíthető! Kíván egy rendelési bizonylatot létrehozni a hiányzó szálanyagokról?", "Hiányzó anyagok", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        string[,] raktarhianyOutput = new string[raktarHiany.Count, 4];
+                        int c = 0;
+                        foreach (var x in raktarHiany)
+                        {
+                            query = string.Format("SELECT tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero " +
+                                "FROM szalanyag " +
+                                "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
+                                "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
+                                "INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
+                                "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id " +
+                                "WHERE szalanyag.id = {0};", x[0]);
+
+                            using (SqlCommand command = new SqlCommand(query, conn))
+                            {
+                                using (SqlDataReader reader = command.ExecuteReader())
+                                {
+                                    reader.Read();
+
+                                    Meret m = new Meret(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6));
+
+                                    raktarhianyOutput[c, 0] = string.Format("{0} ({1}, {2})", reader.GetString(0), reader.GetString(1), reader.GetString(2));
+                                    raktarhianyOutput[c, 1] = m.getNev();
+                                    raktarhianyOutput[c, 2] = x[1].ToString();
+                                    raktarhianyOutput[c, 3] = x[2].ToString();
+
+                                    c++;
+                                }
+                            }
+                        }
+
+                        Output.hianyOutput(munkaszam, rendelo_datum, rendelo_surgosseg, raktarhianyOutput, kezelendoFelulet);
+
+                        MessageBox.Show("Bizonylat kész!");
+                    }
                 }
 
             }

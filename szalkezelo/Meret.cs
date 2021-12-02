@@ -51,5 +51,13 @@ namespace szalkezelo
         {
             return atmero;
         }
+
+        public double getFelulet(double hossz)
+        {
+            if (atmero != 0)
+                return 2 * Math.PI * ((double)atmero / 2) * ((double)atmero / 2 + hossz);
+
+            return ((double)szelesseg * hossz * 2) + ((double)magassag * hossz * 2);
+        }
     }
 }
