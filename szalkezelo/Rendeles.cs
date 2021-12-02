@@ -58,7 +58,7 @@ namespace szalkezelo
 
                 if (txtSzuroNev.Text != "")
                 {
-                    filters += string.Format(" r.beszallito_nev  like '%{0}%'", txtSzuroNev.Text);
+                    filters += string.Format(" r.rendelo_nev like '%{0}%'", txtSzuroNev.Text);
                 }
 
                 if (chkSzuroDatumTol.Checked)
@@ -403,7 +403,7 @@ namespace szalkezelo
                             continue;
                         }
 
-                        query = string.Format("SELECT TOP(1) id, db, hossz " +
+                        query = string.Format("SELECT id, db, hossz " +
                         "FROM raktar " +
                         "WHERE szalanyag_id = {0} AND hossz >= {1} " +
                         "ORDER BY hossz - {1};", vagasok[i].szalanyag_id, vagasok[i].hossz);
@@ -431,35 +431,32 @@ namespace szalkezelo
 
                                 int raktarId = reader.GetInt32(0);
 
-                                if (raktarVagat.ContainsKey(raktarId))
-                                {
-                                    if (reader.GetInt32(1) <= raktarVagat[raktarId])
-                                    {
-                                        success = false;
-
-                                        int k = 0;
-                                        while (k < raktarHiany.Count && (raktarHiany[k][0] != vagasok[i].szalanyag_id || raktarHiany[k][1] != vagasok[i].hossz))
-                                            k++;
-
-                                        if (k < raktarHiany.Count)
-                                            raktarHiany[k][2]++;
-                                        else
-                                            raktarHiany.Add(new int[] { vagasok[i].szalanyag_id, vagasok[i].hossz, 1 });
-                                    }
+                                bool talaltSzalanyag = true;
+                                while (talaltSzalanyag && raktarVagat.ContainsKey(raktarId) && reader.GetInt32(1) <= raktarVagat[raktarId])
+                                    if (!reader.Read())
+                                        talaltSzalanyag = false;
                                     else
-                                    {
-                                        raktarVagat[raktarId] += 1;
+                                        raktarId = reader.GetInt32(0);
 
-                                        maradek tempMaradek;
-                                        tempMaradek.raktarId = raktarId;
-                                        tempMaradek.szalanyagId = vagasok[i].szalanyag_id;
-                                        tempMaradek.hossz = reader.GetInt32(2) - vagasok[i].hossz;
-                                        raktarMaradek.Add(tempMaradek);
-                                    }
+                                if (!talaltSzalanyag)
+                                {
+                                    success = false;
+
+                                    int k = 0;
+                                    while (k < raktarHiany.Count && (raktarHiany[k][0] != vagasok[i].szalanyag_id || raktarHiany[k][1] != vagasok[i].hossz))
+                                        k++;
+
+                                    if (k < raktarHiany.Count)
+                                        raktarHiany[k][2]++;
+                                    else
+                                        raktarHiany.Add(new int[] { vagasok[i].szalanyag_id, vagasok[i].hossz, 1 });
                                 }
                                 else
                                 {
-                                    raktarVagat[raktarId] = 1;
+                                    if (raktarVagat.ContainsKey(raktarId))
+                                        raktarVagat[raktarId] += 1;
+                                    else
+                                        raktarVagat[raktarId] = 1;
 
                                     maradek tempMaradek;
                                     tempMaradek.raktarId = raktarId;
@@ -471,6 +468,9 @@ namespace szalkezelo
                         }
                     }
                 }
+
+                List<int> raktarTorlesek = new List<int>();
+
 
                 // Változtatások végrehajtása
                 if (success)
@@ -496,14 +496,7 @@ namespace szalkezelo
 
                         if (raktarDb <= v.Value)
                         {
-                            string deletequery = string.Format("DELETE FROM raktar " +
-                                "WHERE id = {0};", v.Key);
-
-                            openConnection();
-                            using (SqlCommand insertCommand = new SqlCommand(deletequery, conn))
-                            {
-                                int result = insertCommand.ExecuteNonQuery();
-                            }
+                            raktarTorlesek.Add(v.Key);
                         }
                         else
                         {
@@ -532,6 +525,8 @@ namespace szalkezelo
                     // maradék hozzáadása raktárhoz
                     for (int i = 0; i < raktarMaradek.Count; i++)
                     {
+                        if (raktarMaradek[i].hossz <= 0)
+                            continue;
 
                         string readquery = string.Format("SELECT raktar.id, raktar.db, raktar.hossz, raktar.szalanyag_id " +
                             "FROM raktar " +
@@ -622,10 +617,22 @@ namespace szalkezelo
                                 raktarOutput[c, 0] = string.Format("{0} ({1}, {2})", reader.GetString(2), reader.GetString(3), reader.GetString(4));
                                 raktarOutput[c, 1] = m.getNev();
                                 raktarOutput[c, 2] = reader.GetInt32(1).ToString();
-                                raktarOutput[c, 3] = reader.GetInt32(0).ToString();
+                                raktarOutput[c, 3] = x.Value.ToString();
 
                                 c++;
                             }
+                        }
+                    }
+
+                    foreach (var x in raktarTorlesek)
+                    {
+                        string deletequery = string.Format("DELETE FROM raktar " +
+                                "WHERE id = {0};", x);
+
+                        openConnection();
+                        using (SqlCommand insertCommand = new SqlCommand(deletequery, conn))
+                        {
+                            insertCommand.ExecuteNonQuery();
                         }
                     }
 
@@ -673,6 +680,7 @@ namespace szalkezelo
                     }
                 }
 
+                fillTable();
             }
             catch (Exception ex)
             {

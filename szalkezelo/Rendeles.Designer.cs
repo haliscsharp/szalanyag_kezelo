@@ -29,7 +29,7 @@ namespace szalkezelo
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gbSzurok = new System.Windows.Forms.GroupBox();
             this.btnSzuro = new System.Windows.Forms.Button();
             this.chkSzuroTeljesitett = new System.Windows.Forms.CheckBox();
@@ -291,7 +291,7 @@ namespace szalkezelo
             this.btnVagasEltavolitasa.Name = "btnVagasEltavolitasa";
             this.btnVagasEltavolitasa.Size = new System.Drawing.Size(129, 29);
             this.btnVagasEltavolitasa.TabIndex = 2;
-            this.btnVagasEltavolitasa.Text = "Vágás eltávolítása";
+            this.btnVagasEltavolitasa.Text = "Vágás törlése";
             this.btnVagasEltavolitasa.UseVisualStyleBackColor = true;
             this.btnVagasEltavolitasa.Click += new System.EventHandler(this.btnVagasEltavolitasa_Click);
             // 
@@ -329,14 +329,14 @@ namespace szalkezelo
             this.datum,
             this.surgosseg,
             this.vagaslista});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgwRendeles.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgwRendeles.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgwRendeles.Location = new System.Drawing.Point(12, 136);
             this.dgwRendeles.Name = "dgwRendeles";
             this.dgwRendeles.ReadOnly = true;

@@ -168,11 +168,6 @@ namespace szalkezelo
                 chkKellSzelesseg.Checked = true;
                 chkKellMagassag.Checked = true;
             }
-            else
-            {
-                chkKellSzelesseg.Checked = false;
-                chkKellMagassag.Checked = false;
-            }
         }
     }
 }
