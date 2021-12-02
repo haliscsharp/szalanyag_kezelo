@@ -62,3 +62,15 @@ D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.MeretInput.resources
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.TipusInput.resources
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.VagaslistaInput.resources
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\Microsoft.Win32.SystemEvents.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\PdfSharp.Charting.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\PdfSharp.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\System.Drawing.Common.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\System.Runtime.CompilerServices.Unsafe.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\System.Text.Encoding.CodePages.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\de\PdfSharp.Charting.resources.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\de\PdfSharp.resources.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\runtimes\unix\lib\netcoreapp3.1\System.Drawing.Common.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp3.1\System.Drawing.Common.dll
+D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp3.1\System.Text.Encoding.CodePages.dll

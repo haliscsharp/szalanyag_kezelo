@@ -17,6 +17,14 @@ namespace szalkezelo
         public int hossz;
         public bool feluletkezeles;
         public int szalanyag_id;
+        public string text;
+    }
+
+    struct maradek
+    {
+        public int raktarId;
+        public int szalanyagId;
+        public int hossz;
     }
 
     public partial class Rendeles : BaseForm
@@ -300,13 +308,6 @@ namespace szalkezelo
             }
         }
 
-        struct maradek
-        {
-            public int raktarId;
-            public int szalanyagId;
-            public int hossz;
-        }
-
         private void btnRendelesTeljesites_Click(object sender, EventArgs e)
         {
             if (Convert.ToBoolean(dgwRendeles.SelectedRows[0].Cells[1].Value) == true)
@@ -316,11 +317,22 @@ namespace szalkezelo
             }
 
             int rendeles_id = Convert.ToInt32(dgwRendeles.SelectedRows[0].Cells[0].Value.ToString());
+            string rendelo_datum = dgwRendeles.SelectedRows[0].Cells[3].Value.ToString();
+            string rendelo_surgosseg = dgwRendeles.SelectedRows[0].Cells[4].Value.ToString();
+            string munkaszam = "SZ";
+            for (int i = 0; i < 4 - rendeles_id.ToString().Length; i++)
+                munkaszam += "0";
+            munkaszam += rendeles_id.ToString();
 
             try
             {
-                string query = string.Format("SELECT v.db, v.hossz, v.feluletkezeles, v.szalanyag_id " +
+                string query = string.Format("SELECT v.db, v.hossz, v.feluletkezeles, v.szalanyag_id, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero " +
                     "FROM vagaslista as v " +
+                    "INNER JOIN szalanyag ON v.szalanyag_id = szalanyag.id " +
+                    "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
+                    "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
+                    "INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
+                    "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id " +
                     "WHERE rendeles_id = {0} " +
                     "ORDER BY v.hossz DESC;", rendeles_id);
 
@@ -333,12 +345,18 @@ namespace szalkezelo
                     {
                         while (reader.Read())
                         {
+                            Meret m = new Meret(reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9), reader.GetInt32(10));
+                            
                             vagas temp;
                             temp.db = reader.GetInt32(0);
                             temp.hossz = reader.GetInt32(1);
                             temp.feluletkezeles = reader.GetBoolean(2);
                             temp.szalanyag_id = reader.GetInt32(3);
-
+                            temp.text = string.Format("{0} x {1} x {2} {3}\n",
+                                reader.GetInt32(0),
+                                reader.GetInt32(1),
+                                string.Format("{0} ({1}, {2}, {3})", reader.GetString(4), reader.GetString(5), reader.GetString(6), m.getNev()),
+                                (temp.feluletkezeles ? "+ felületkezelés" : ""));
                             vagasok.Add(temp);
                         }
                     }
@@ -436,137 +454,169 @@ namespace szalkezelo
                 // Változtatások végrehajtása
                 if (success)
                 {
-                    foreach (var v in raktarVagat)
-                    {
-                        query = string.Format("SELECT db " +
-                            "FROM raktar " +
-                            "WHERE id = {0};", v.Key);
+                    //foreach (var v in raktarVagat)
+                    //{
+                    //    query = string.Format("SELECT db " +
+                    //        "FROM raktar " +
+                    //        "WHERE id = {0};", v.Key);
 
-                        int raktarDb = -1;
-                        openConnection();
+                    //    int raktarDb = -1;
+                    //    openConnection();
+                    //    using (SqlCommand command = new SqlCommand(query, conn))
+                    //    {
+                    //        using (SqlDataReader reader = command.ExecuteReader())
+                    //        {
+                    //            reader.Read();
+
+                    //            raktarDb = reader.GetInt32(0);
+                    //        }
+                    //    }
+
+
+                    //    if (raktarDb <= v.Value)
+                    //    {
+                    //        string deletequery = string.Format("DELETE FROM raktar " +
+                    //            "WHERE id = {0};", v.Key);
+
+                    //        openConnection();
+                    //        using (SqlCommand insertCommand = new SqlCommand(deletequery, conn))
+                    //        {
+                    //            int result = insertCommand.ExecuteNonQuery();
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        string updatequery = string.Format("UPDATE raktar " +
+                    //            "SET db = {0}" +
+                    //            "WHERE id = {1};", raktarDb - v.Value, v.Key);
+
+                    //        openConnection();
+                    //        using (SqlCommand insertCommand = new SqlCommand(updatequery, conn))
+                    //        {
+                    //            int result = insertCommand.ExecuteNonQuery();
+                    //        }
+                    //    }
+                    //}
+
+                    //query = string.Format("UPDATE rendeles " +
+                    //            "SET teljesitett = 1" +
+                    //            "WHERE id = {0};", rendeles_id);
+
+                    //openConnection();
+                    //using (SqlCommand insertCommand = new SqlCommand(query, conn))
+                    //{
+                    //    insertCommand.ExecuteNonQuery();
+                    //}
+
+                    //// maradék hozzáadása raktárhoz
+                    //for (int i = 0; i < raktarMaradek.Count; i++)
+                    //{
+
+                    //    string readquery = string.Format("SELECT raktar.id, raktar.db, raktar.hossz, raktar.szalanyag_id " +
+                    //        "FROM raktar " +
+                    //        "WHERE raktar.szalanyag_id = {0} AND raktar.hossz = {1};", raktarMaradek[i].szalanyagId, raktarMaradek[i].hossz);
+
+                    //    Dictionary<string, int> storageData = new Dictionary<string, int>(4);
+
+                    //    bool alreadyExists = true;
+
+                    //    using (SqlCommand readCommand = new SqlCommand(readquery, conn))
+                    //    {
+                    //        using (SqlDataReader reader = readCommand.ExecuteReader())
+                    //        {
+                    //            if (reader.HasRows)
+                    //            {
+                    //                reader.Read();
+
+                    //                storageData["id"] = reader.GetInt32(0);
+                    //                storageData["db"] = reader.GetInt32(1);
+                    //                storageData["hossz"] = reader.GetInt32(2);
+                    //                storageData["szalanyag_id"] = reader.GetInt32(3);
+                    //            }
+                    //            else
+                    //            {
+                    //                alreadyExists = false;
+                    //            }
+                    //        }
+                    //    }
+
+                    //    string insertquery;
+
+                    //    if (alreadyExists)
+                    //    {
+                    //        insertquery = string.Format("UPDATE raktar SET db = {0} WHERE id = {1};",
+                    //            storageData["db"] + 1,
+                    //            storageData["id"]);
+
+                    //        using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
+                    //        {
+                    //            int result = insertCommand.ExecuteNonQuery();
+
+                    //            if (result < 0)
+                    //            {
+                    //                MessageBox.Show("Hiba adatmódosítás közben!");
+                    //            }
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        insertquery = string.Format("INSERT INTO raktar(db, hossz, szalanyag_id) VALUES({0}, {1}, {2});",
+                    //            1,
+                    //            raktarMaradek[i].hossz,
+                    //            raktarMaradek[i].szalanyagId);
+
+                    //        using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
+                    //        {
+                    //            int result = insertCommand.ExecuteNonQuery();
+
+                    //            if (result < 0)
+                    //            {
+                    //                MessageBox.Show("Hiba adatbeszúrás közben!");
+                    //            }
+                    //        }
+                    //    }
+                    //}
+
+                    string[,] raktarOutput = new string[raktarVagat.Count, 4];
+                    int c = 0;
+                    foreach (var x in raktarVagat)
+                    {
+                        query = string.Format("SELECT r.db, r.hossz, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero " +
+                        "FROM raktar as r " +
+                        "INNER JOIN szalanyag ON r.szalanyag_id = szalanyag.id " +
+                        "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
+                        "INNER JOIN anyag ON szalanyag.anyag_id = anyag.id " +
+                        "INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
+                        "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id " +
+                        "WHERE r.id = {0};", x.Key);
+
                         using (SqlCommand command = new SqlCommand(query, conn))
                         {
                             using (SqlDataReader reader = command.ExecuteReader())
                             {
                                 reader.Read();
 
-                                raktarDb = reader.GetInt32(0);
-                            }
-                        }
+                                Meret m = new Meret(reader.GetInt32(5), reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8));
 
+                                raktarOutput[c, 0] = string.Format("{0} ({1}, {2})", reader.GetString(2), reader.GetString(3), reader.GetString(4));
+                                raktarOutput[c, 1] = m.getNev();
+                                raktarOutput[c, 2] = reader.GetInt32(1).ToString();
+                                raktarOutput[c, 3] = reader.GetInt32(0).ToString();
 
-                        if (raktarDb <= v.Value)
-                        {
-                            string deletequery = string.Format("DELETE FROM raktar " +
-                                "WHERE id = {0};", v.Key);
-
-                            openConnection();
-                            using (SqlCommand insertCommand = new SqlCommand(deletequery, conn))
-                            {
-                                int result = insertCommand.ExecuteNonQuery();
-                            }
-                        }
-                        else
-                        {
-                            string updatequery = string.Format("UPDATE raktar " +
-                                "SET db = {0}" +
-                                "WHERE id = {1};", raktarDb - v.Value, v.Key);
-
-                            openConnection();
-                            using (SqlCommand insertCommand = new SqlCommand(updatequery, conn))
-                            {
-                                int result = insertCommand.ExecuteNonQuery();
+                                c++;
                             }
                         }
                     }
 
-                    query = string.Format("UPDATE rendeles " +
-                                "SET teljesitett = 1" +
-                                "WHERE id = {0};", rendeles_id);
-
-                    openConnection();
-                    using (SqlCommand insertCommand = new SqlCommand(query, conn))
-                    {
-                        insertCommand.ExecuteNonQuery();
-                    }
-
-                    // maradék hozzáadása raktárhoz
-                    for (int i = 0; i < raktarMaradek.Count; i++)
-                    {
-
-                        string readquery = string.Format("SELECT raktar.id, raktar.db, raktar.hossz, raktar.szalanyag_id " +
-                            "FROM raktar " +
-                            "WHERE raktar.szalanyag_id = {0} AND raktar.hossz = {1};", raktarMaradek[i].szalanyagId, raktarMaradek[i].hossz);
-
-                        Dictionary<string, int> storageData = new Dictionary<string, int>(4);
-
-                        bool alreadyExists = true;
-
-                        using (SqlCommand readCommand = new SqlCommand(readquery, conn))
-                        {
-                            using (SqlDataReader reader = readCommand.ExecuteReader())
-                            {
-                                if (reader.HasRows)
-                                {
-                                    reader.Read();
-
-                                    storageData["id"] = reader.GetInt32(0);
-                                    storageData["db"] = reader.GetInt32(1);
-                                    storageData["hossz"] = reader.GetInt32(2);
-                                    storageData["szalanyag_id"] = reader.GetInt32(3);
-                                }
-                                else
-                                {
-                                    alreadyExists = false;
-                                }
-                            }
-                        }
-
-                        string insertquery;
-
-                        if (alreadyExists)
-                        {
-                            insertquery = string.Format("UPDATE raktar SET db = {0} WHERE id = {1};",
-                                storageData["db"] + 1,
-                                storageData["id"]);
-
-                            using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
-                            {
-                                int result = insertCommand.ExecuteNonQuery();
-
-                                if (result < 0)
-                                {
-                                    MessageBox.Show("Hiba adatmódosítás közben!");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            insertquery = string.Format("INSERT INTO raktar(db, hossz, szalanyag_id) VALUES({0}, {1}, {2});",
-                                1,
-                                raktarMaradek[i].hossz,
-                                raktarMaradek[i].szalanyagId);
-
-                            using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
-                            {
-                                int result = insertCommand.ExecuteNonQuery();
-
-                                if (result < 0)
-                                {
-                                    MessageBox.Show("Hiba adatbeszúrás közben!");
-                                }
-                            }
-                        }
-                    }
+                    Output.rendelesOutput(munkaszam, rendelo_datum, rendelo_surgosseg, raktarOutput);
 
                     MessageBox.Show("Rendelés teljesítve!");
                 }
 
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba történt a tábla frissítése során!\n\n" + ex.Message);
+                MessageBox.Show("Hiba történt a rendelés teljesítése során!\n\n" + ex.Message);
             }
             finally
             {

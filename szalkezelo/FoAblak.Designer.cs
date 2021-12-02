@@ -47,6 +47,7 @@ namespace szalkezelo
             this.gbSzurok = new System.Windows.Forms.GroupBox();
             this.lblSzalanyag = new System.Windows.Forms.Label();
             this.cbSzuroSzalanyag = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgwRaktar)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.gbSzurok.SuspendLayout();
@@ -179,6 +180,7 @@ namespace szalkezelo
             // 
             // gbSzurok
             // 
+            this.gbSzurok.Controls.Add(this.button1);
             this.gbSzurok.Controls.Add(this.lblSzalanyag);
             this.gbSzurok.Controls.Add(this.cbSzuroSzalanyag);
             this.gbSzurok.Location = new System.Drawing.Point(12, 31);
@@ -205,6 +207,16 @@ namespace szalkezelo
             this.cbSzuroSzalanyag.Name = "cbSzuroSzalanyag";
             this.cbSzuroSzalanyag.Size = new System.Drawing.Size(262, 28);
             this.cbSzuroSzalanyag.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(601, 24);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(94, 29);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // FoAblak
             // 
@@ -248,6 +260,7 @@ namespace szalkezelo
         private System.Windows.Forms.GroupBox gbSzurok;
         private System.Windows.Forms.Label lblSzalanyag;
         private System.Windows.Forms.ComboBox cbSzuroSzalanyag;
+        private System.Windows.Forms.Button button1;
     }
 }
 
