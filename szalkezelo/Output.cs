@@ -82,7 +82,7 @@ namespace szalkezelo
             gfx.DrawString("Kezelendő felület: " + Math.Round(kezelendoFelulet, 2).ToString() + " mm2", font, XBrushes.Black, new XPoint(widthOffset + 3, heightOffset + (raktarOutput.GetLength(0) + 2) * 15 + 47));
 
 
-            document.Save(@"rendelés.pdf");
+            document.Save(@"rendelés - " + munkaszam + ".pdf");
         }
 
         public static void hianyOutput(string munkaszam, string rendelo_datum, string rendelo_surgosseg, string[,] raktarhianyOutput, double kezelendoFelulet)
@@ -157,7 +157,7 @@ namespace szalkezelo
             gfx.DrawString("Kezelendő felület: " + Math.Round(kezelendoFelulet, 2).ToString() + " mm2", font, XBrushes.Black, new XPoint(widthOffset + 3, heightOffset + (raktarhianyOutput.GetLength(0) + 2) * 15 + 47));
 
 
-            document.Save(@"hiány bevételezés.pdf");
+            document.Save(@"hiány bevételezés - " + munkaszam + ".pdf");
         }
 
     }
