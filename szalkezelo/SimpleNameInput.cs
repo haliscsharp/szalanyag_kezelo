@@ -41,6 +41,7 @@ namespace szalkezelo
 
                 string readquery = string.Format("SELECT id FROM {0} WHERE nev = '{1}';", tableName, txtNev.Text);
 
+                bool alreadyExists = true;
                 using (SqlCommand readCommand = new SqlCommand(readquery, conn))
                 {
                     using (SqlDataReader reader = readCommand.ExecuteReader())
@@ -51,23 +52,28 @@ namespace szalkezelo
                         }
                         else
                         {
-                            string insertquery = string.Format("INSERT INTO {0}(nev) VALUES(N'" + txtNev.Text + "');", tableName);
+                            alreadyExists = false;
+                        }
+                    }
+                }
 
-                            using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
-                            {
-                                int result = insertCommand.ExecuteNonQuery();
+                if (!alreadyExists)
+                {
+                    string insertquery = string.Format("INSERT INTO {0}(nev) VALUES(N'" + txtNev.Text + "');", tableName);
 
-                                if (result < 0)
-                                {
-                                    MessageBox.Show("Hiba adatbeszúrás közben!");
-                                }
-                                else
-                                {
-                                    conn.Close();
-                                    txtNev.Text = "";
-                                    fillTable();
-                                }
-                            }
+                    using (SqlCommand insertCommand = new SqlCommand(insertquery, conn))
+                    {
+                        int result = insertCommand.ExecuteNonQuery();
+
+                        if (result < 0)
+                        {
+                            MessageBox.Show("Hiba adatbeszúrás közben!");
+                        }
+                        else
+                        {
+                            conn.Close();
+                            txtNev.Text = "";
+                            fillTable();
                         }
                     }
                 }
