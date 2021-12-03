@@ -108,9 +108,11 @@ namespace szalkezelo
 
                 for (int i = 0; i < dgwRendeles.Rows.Count; i++)
                 {
+                    List<vagas> vagasok = new List<vagas>();
+
                     int rendeles_id = Convert.ToInt32(dgwRendeles.Rows[i].Cells[0].Value.ToString());
 
-                    query = string.Format("SELECT v.db, v.hossz, v.feluletkezeles, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero " +
+                    query = string.Format("SELECT v.db, v.hossz, v.feluletkezeles, tipus.nev, anyag.rovid, anyagminoseg.nev, meret.szelesseg, meret.magassag, meret.vastagsag, meret.atmero, szalanyag_id " +
                         "FROM vagaslista as v " +
                         "INNER JOIN szalanyag ON v.szalanyag_id = szalanyag.id " +
                         "INNER JOIN meret ON szalanyag.meret_id = meret.id " +
@@ -118,7 +120,7 @@ namespace szalkezelo
                         "INNER JOIN anyagminoseg ON szalanyag.anyagminoseg_id = anyagminoseg.id " +
                         "INNER JOIN tipus ON szalanyag.tipus_id = tipus.id " +
                         "WHERE v.rendeles_id = {0};", rendeles_id);
-
+                    
                     using (SqlCommand command = new SqlCommand(query, conn))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -126,13 +128,135 @@ namespace szalkezelo
                             while (reader.Read())
                             {
                                 Meret m = new Meret(reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9));
+
                                 dgwRendeles.Rows[i].Cells[6].Value += string.Format("- {0} x {1} x {2} {3}\n", 
                                     reader.GetInt32(0), 
                                     reader.GetInt32(1), 
                                     string.Format("{0} ({1}, {2}, {3})", reader.GetString(3), reader.GetString(4), reader.GetString(5), m.getNev()),
                                     (reader.GetBoolean(2)?"+ felületkezelés":""));
+
+                                vagas temp;
+                                temp.db = reader.GetInt32(0);
+                                temp.hossz = reader.GetInt32(1);
+                                temp.feluletkezeles = reader.GetBoolean(2);
+                                temp.szalanyag_id = reader.GetInt32(10);
+                                temp.text = string.Format("{0} x {1} x {2} {3}\n",
+                                    reader.GetInt32(0),
+                                    reader.GetInt32(1),
+                                    string.Format("{0} ({1}, {2}, {3})", reader.GetString(3), reader.GetString(4), reader.GetString(5), m.getNev()),
+                                    (temp.feluletkezeles ? "+ felületkezelés" : ""));
+                                vagasok.Add(temp);
                             }
                         }
+                    }
+
+                    // teljesíthetőség ellenőrzése
+                    if (!(bool)dgwRendeles.Rows[i].Cells[1].Value)
+                    {
+                        Dictionary<int, int> raktarVagat = new Dictionary<int, int>();
+                        Dictionary<int, int> maradekVagat = new Dictionary<int, int>();
+                        List<maradek> raktarMaradek = new List<maradek>();
+                        List<int[]> raktarHiany = new List<int[]>();
+
+                        // vágások teljesíthetőségének vizsgálata
+                        bool success = true;
+                        for (int v = 0; v < vagasok.Count; v++)
+                        {
+                            for (int j = 0; j < vagasok[v].db; j++)
+                            {
+                                int m = 0;
+                                while (m < raktarMaradek.Count && (raktarMaradek[m].szalanyagId != vagasok[v].szalanyag_id || raktarMaradek[m].hossz < vagasok[v].hossz))
+                                {
+                                    m++;
+                                }
+
+                                if (m < raktarMaradek.Count)
+                                {
+                                    if (maradekVagat.ContainsKey(m))
+                                        maradekVagat[m] += 1;
+                                    else
+                                        maradekVagat[m] = 1;
+
+                                    maradek tempMaradek;
+                                    tempMaradek.raktarId = raktarMaradek[m].raktarId;
+                                    tempMaradek.szalanyagId = raktarMaradek[m].szalanyagId;
+                                    tempMaradek.hossz = raktarMaradek[m].hossz - vagasok[v].hossz;
+
+                                    raktarMaradek[m] = tempMaradek;
+
+                                    continue;
+                                }
+
+                                query = string.Format("SELECT id, db, hossz " +
+                                "FROM raktar " +
+                                "WHERE szalanyag_id = {0} AND hossz >= {1} " +
+                                "ORDER BY hossz - {1};", vagasok[v].szalanyag_id, vagasok[v].hossz);
+
+                                openConnection();
+                                using (SqlCommand command = new SqlCommand(query, conn))
+                                {
+                                    using (SqlDataReader reader = command.ExecuteReader())
+                                    {
+                                        if (!reader.Read())
+                                        {
+                                            success = false;
+
+                                            int k = 0;
+                                            while (k < raktarHiany.Count && (raktarHiany[k][0] != vagasok[v].szalanyag_id || raktarHiany[k][1] != vagasok[v].hossz))
+                                                k++;
+
+                                            if (k < raktarHiany.Count)
+                                                raktarHiany[k][2]++;
+                                            else
+                                                raktarHiany.Add(new int[] { vagasok[v].szalanyag_id, vagasok[v].hossz, 1 });
+
+                                            continue;
+                                        }
+
+                                        int raktarId = reader.GetInt32(0);
+
+                                        bool talaltSzalanyag = true;
+                                        while (talaltSzalanyag && raktarVagat.ContainsKey(raktarId) && reader.GetInt32(1) <= raktarVagat[raktarId])
+                                            if (!reader.Read())
+                                                talaltSzalanyag = false;
+                                            else
+                                                raktarId = reader.GetInt32(0);
+
+                                        if (!talaltSzalanyag)
+                                        {
+                                            success = false;
+
+                                            int k = 0;
+                                            while (k < raktarHiany.Count && (raktarHiany[k][0] != vagasok[v].szalanyag_id || raktarHiany[k][1] != vagasok[v].hossz))
+                                                k++;
+
+                                            if (k < raktarHiany.Count)
+                                                raktarHiany[k][2]++;
+                                            else
+                                                raktarHiany.Add(new int[] { vagasok[v].szalanyag_id, vagasok[v].hossz, 1 });
+                                        }
+                                        else
+                                        {
+                                            if (raktarVagat.ContainsKey(raktarId))
+                                                raktarVagat[raktarId] += 1;
+                                            else
+                                                raktarVagat[raktarId] = 1;
+
+                                            maradek tempMaradek;
+                                            tempMaradek.raktarId = raktarId;
+                                            tempMaradek.szalanyagId = vagasok[v].szalanyag_id;
+                                            tempMaradek.hossz = reader.GetInt32(2) - vagasok[v].hossz;
+                                            raktarMaradek.Add(tempMaradek);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (success)
+                            dgwRendeles.Rows[i].DefaultCellStyle.BackColor = Color.Lime;
+                        else
+                            dgwRendeles.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                     }
                 }
 
