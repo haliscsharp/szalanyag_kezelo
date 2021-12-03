@@ -31,17 +31,17 @@ namespace szalkezelo
         {
             this.lblMeret = new System.Windows.Forms.Label();
             this.gbFelvitel = new System.Windows.Forms.GroupBox();
+            this.chkFeluletkezeles = new System.Windows.Forms.CheckBox();
+            this.nudDb = new System.Windows.Forms.NumericUpDown();
             this.nudHossz = new System.Windows.Forms.NumericUpDown();
             this.lblHossz = new System.Windows.Forms.Label();
             this.lblDb = new System.Windows.Forms.Label();
             this.btnUjSzalanyag = new System.Windows.Forms.Button();
             this.cbSzalanyag = new System.Windows.Forms.ComboBox();
             this.btnFelvitel = new System.Windows.Forms.Button();
-            this.nudDb = new System.Windows.Forms.NumericUpDown();
-            this.chkFeluletkezeles = new System.Windows.Forms.CheckBox();
             this.gbFelvitel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHossz)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHossz)).BeginInit();
             this.SuspendLayout();
             // 
             // lblMeret
@@ -70,6 +70,29 @@ namespace szalkezelo
             this.gbFelvitel.TabIndex = 3;
             this.gbFelvitel.TabStop = false;
             this.gbFelvitel.Text = "Új elem felvitele";
+            // 
+            // chkFeluletkezeles
+            // 
+            this.chkFeluletkezeles.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkFeluletkezeles.Location = new System.Drawing.Point(6, 87);
+            this.chkFeluletkezeles.Name = "chkFeluletkezeles";
+            this.chkFeluletkezeles.Size = new System.Drawing.Size(142, 30);
+            this.chkFeluletkezeles.TabIndex = 11;
+            this.chkFeluletkezeles.Text = "Felületkezelés:";
+            this.chkFeluletkezeles.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkFeluletkezeles.UseVisualStyleBackColor = true;
+            // 
+            // nudDb
+            // 
+            this.nudDb.Location = new System.Drawing.Point(131, 21);
+            this.nudDb.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudDb.Name = "nudDb";
+            this.nudDb.Size = new System.Drawing.Size(282, 27);
+            this.nudDb.TabIndex = 7;
             // 
             // nudHossz
             // 
@@ -130,29 +153,6 @@ namespace szalkezelo
             this.btnFelvitel.UseVisualStyleBackColor = true;
             this.btnFelvitel.Click += new System.EventHandler(this.btnFelvitel_Click);
             // 
-            // nudDb
-            // 
-            this.nudDb.Location = new System.Drawing.Point(131, 21);
-            this.nudDb.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.nudDb.Name = "nudDb";
-            this.nudDb.Size = new System.Drawing.Size(282, 27);
-            this.nudDb.TabIndex = 7;
-            // 
-            // chkFeluletkezeles
-            // 
-            this.chkFeluletkezeles.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkFeluletkezeles.Location = new System.Drawing.Point(6, 87);
-            this.chkFeluletkezeles.Name = "chkFeluletkezeles";
-            this.chkFeluletkezeles.Size = new System.Drawing.Size(142, 30);
-            this.chkFeluletkezeles.TabIndex = 11;
-            this.chkFeluletkezeles.Text = "Felületkezelés:";
-            this.chkFeluletkezeles.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkFeluletkezeles.UseVisualStyleBackColor = true;
-            // 
             // VagaslistaInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -160,11 +160,11 @@ namespace szalkezelo
             this.ClientSize = new System.Drawing.Size(503, 249);
             this.Controls.Add(this.gbFelvitel);
             this.Name = "VagaslistaInput";
-            this.Text = "Bevételezés";
+            this.Text = "Vágás felvétel";
             this.Load += new System.EventHandler(this.Bevetelezes_Load);
             this.gbFelvitel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudHossz)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHossz)).EndInit();
             this.ResumeLayout(false);
 
         }
