@@ -53,8 +53,6 @@ namespace szalkezelo
             this.btnUjVagas = new System.Windows.Forms.Button();
             this.btnFelvitel = new System.Windows.Forms.Button();
             this.dgwRendeles = new System.Windows.Forms.DataGridView();
-            this.btnRendelesTeljesites = new System.Windows.Forms.Button();
-            this.btnRendelesTorles = new System.Windows.Forms.Button();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.teljesitett = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.munkaszam = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,6 +60,8 @@ namespace szalkezelo
             this.datum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.surgosseg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vagaslista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnRendelesTeljesites = new System.Windows.Forms.Button();
+            this.btnRendelesTorles = new System.Windows.Forms.Button();
             this.gbSzurok.SuspendLayout();
             this.gbFelvitel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSurgosseg)).BeginInit();
@@ -133,6 +133,7 @@ namespace szalkezelo
             this.chkSzuroDatumIg.Text = "Dátum ig:";
             this.chkSzuroDatumIg.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkSzuroDatumIg.UseVisualStyleBackColor = true;
+            this.chkSzuroDatumIg.CheckedChanged += new System.EventHandler(this.chkSzuroDatumIg_CheckedChanged);
             // 
             // chkSzuroDatumTol
             // 
@@ -144,6 +145,7 @@ namespace szalkezelo
             this.chkSzuroDatumTol.Text = "Dátum tól:";
             this.chkSzuroDatumTol.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkSzuroDatumTol.UseVisualStyleBackColor = true;
+            this.chkSzuroDatumTol.CheckedChanged += new System.EventHandler(this.chkSzuroDatumTol_CheckedChanged);
             // 
             // dtpSzuroIg
             // 
@@ -349,26 +351,6 @@ namespace szalkezelo
             this.dgwRendeles.Size = new System.Drawing.Size(898, 349);
             this.dgwRendeles.TabIndex = 5;
             // 
-            // btnRendelesTeljesites
-            // 
-            this.btnRendelesTeljesites.Location = new System.Drawing.Point(746, 491);
-            this.btnRendelesTeljesites.Name = "btnRendelesTeljesites";
-            this.btnRendelesTeljesites.Size = new System.Drawing.Size(164, 49);
-            this.btnRendelesTeljesites.TabIndex = 2;
-            this.btnRendelesTeljesites.Text = "Kijelölt teljesítése";
-            this.btnRendelesTeljesites.UseVisualStyleBackColor = true;
-            this.btnRendelesTeljesites.Click += new System.EventHandler(this.btnRendelesTeljesites_Click);
-            // 
-            // btnRendelesTorles
-            // 
-            this.btnRendelesTorles.Location = new System.Drawing.Point(570, 501);
-            this.btnRendelesTorles.Name = "btnRendelesTorles";
-            this.btnRendelesTorles.Size = new System.Drawing.Size(130, 29);
-            this.btnRendelesTorles.TabIndex = 2;
-            this.btnRendelesTorles.Text = "Rendelés törlése";
-            this.btnRendelesTorles.UseVisualStyleBackColor = true;
-            this.btnRendelesTorles.Click += new System.EventHandler(this.btnRendelesTorles_Click);
-            // 
             // id
             // 
             this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -377,7 +359,7 @@ namespace szalkezelo
             this.id.Name = "id";
             this.id.ReadOnly = true;
             this.id.Visible = false;
-            this.id.Width = 51;
+            this.id.Width = 125;
             // 
             // teljesitett
             // 
@@ -430,6 +412,26 @@ namespace szalkezelo
             this.vagaslista.MinimumWidth = 300;
             this.vagaslista.Name = "vagaslista";
             this.vagaslista.ReadOnly = true;
+            // 
+            // btnRendelesTeljesites
+            // 
+            this.btnRendelesTeljesites.Location = new System.Drawing.Point(746, 491);
+            this.btnRendelesTeljesites.Name = "btnRendelesTeljesites";
+            this.btnRendelesTeljesites.Size = new System.Drawing.Size(164, 49);
+            this.btnRendelesTeljesites.TabIndex = 2;
+            this.btnRendelesTeljesites.Text = "Kijelölt teljesítése";
+            this.btnRendelesTeljesites.UseVisualStyleBackColor = true;
+            this.btnRendelesTeljesites.Click += new System.EventHandler(this.btnRendelesTeljesites_Click);
+            // 
+            // btnRendelesTorles
+            // 
+            this.btnRendelesTorles.Location = new System.Drawing.Point(570, 501);
+            this.btnRendelesTorles.Name = "btnRendelesTorles";
+            this.btnRendelesTorles.Size = new System.Drawing.Size(130, 29);
+            this.btnRendelesTorles.TabIndex = 2;
+            this.btnRendelesTorles.Text = "Rendelés törlése";
+            this.btnRendelesTorles.UseVisualStyleBackColor = true;
+            this.btnRendelesTorles.Click += new System.EventHandler(this.btnRendelesTorles_Click);
             // 
             // Rendeles
             // 

@@ -822,5 +822,14 @@ namespace szalkezelo
             }
         }
 
+        private void chkSzuroDatumTol_CheckedChanged(object sender, EventArgs e)
+        {
+            dtpSzuroTol.Enabled = !dtpSzuroTol.Enabled;
+        }
+
+        private void chkSzuroDatumIg_CheckedChanged(object sender, EventArgs e)
+        {
+            dtpSzuroIg.Enabled = !dtpSzuroIg.Enabled;
+        }
     }
 }
