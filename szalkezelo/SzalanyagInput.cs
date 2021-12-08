@@ -465,6 +465,7 @@ namespace szalkezelo
             mi.ShowDialog();
 
             fillCbMeret();
+            fillCbSzuroMeret();
         }
 
         private void btnUjAnyag_Click(object sender, EventArgs e)
