@@ -188,6 +188,7 @@ namespace szalkezelo
             // 
             // cbTipus
             // 
+            this.cbTipus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipus.FormattingEnabled = true;
             this.cbTipus.Location = new System.Drawing.Point(126, 94);
             this.cbTipus.Name = "cbTipus";
@@ -197,6 +198,7 @@ namespace szalkezelo
             // 
             // cbAnyag
             // 
+            this.cbAnyag.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAnyag.FormattingEnabled = true;
             this.cbAnyag.Location = new System.Drawing.Point(126, 26);
             this.cbAnyag.Name = "cbAnyag";
@@ -205,6 +207,7 @@ namespace szalkezelo
             // 
             // cbMinoseg
             // 
+            this.cbMinoseg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMinoseg.FormattingEnabled = true;
             this.cbMinoseg.Location = new System.Drawing.Point(126, 60);
             this.cbMinoseg.Name = "cbMinoseg";
@@ -222,6 +225,7 @@ namespace szalkezelo
             // 
             // cbMeret
             // 
+            this.cbMeret.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMeret.FormattingEnabled = true;
             this.cbMeret.Location = new System.Drawing.Point(126, 128);
             this.cbMeret.Name = "cbMeret";
@@ -311,6 +315,7 @@ namespace szalkezelo
             // 
             // cbSzuroMinoseg
             // 
+            this.cbSzuroMinoseg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSzuroMinoseg.FormattingEnabled = true;
             this.cbSzuroMinoseg.Location = new System.Drawing.Point(456, 26);
             this.cbSzuroMinoseg.Name = "cbSzuroMinoseg";
@@ -320,6 +325,7 @@ namespace szalkezelo
             // 
             // cbSzuroTipus
             // 
+            this.cbSzuroTipus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSzuroTipus.FormattingEnabled = true;
             this.cbSzuroTipus.Location = new System.Drawing.Point(456, 69);
             this.cbSzuroTipus.Name = "cbSzuroTipus";
@@ -329,6 +335,7 @@ namespace szalkezelo
             // 
             // cbSzuroMeret
             // 
+            this.cbSzuroMeret.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSzuroMeret.FormattingEnabled = true;
             this.cbSzuroMeret.Location = new System.Drawing.Point(119, 25);
             this.cbSzuroMeret.Name = "cbSzuroMeret";
@@ -338,6 +345,7 @@ namespace szalkezelo
             // 
             // cbSzuroAnyag
             // 
+            this.cbSzuroAnyag.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSzuroAnyag.FormattingEnabled = true;
             this.cbSzuroAnyag.Location = new System.Drawing.Point(119, 68);
             this.cbSzuroAnyag.Name = "cbSzuroAnyag";

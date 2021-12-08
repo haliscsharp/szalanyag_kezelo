@@ -364,6 +364,7 @@ namespace szalkezelo
             // 
             // cbSzuroSzalanyag
             // 
+            this.cbSzuroSzalanyag.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSzuroSzalanyag.FormattingEnabled = true;
             this.cbSzuroSzalanyag.Location = new System.Drawing.Point(119, 68);
             this.cbSzuroSzalanyag.Name = "cbSzuroSzalanyag";

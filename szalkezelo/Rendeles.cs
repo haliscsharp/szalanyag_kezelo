@@ -376,6 +376,12 @@ namespace szalkezelo
 
         private void btnRendelesTorles_Click(object sender, EventArgs e)
         {
+            if (dgwRendeles.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show("Nincs rendelés kiválasztva!");
+                return;
+            }
+
             if (Convert.ToBoolean(dgwRendeles.SelectedRows[0].Cells[1].Value) == true)
             {
                 MessageBox.Show("Csak olyan rendelést lehet törölni, amely még nem volt teljesítve!");

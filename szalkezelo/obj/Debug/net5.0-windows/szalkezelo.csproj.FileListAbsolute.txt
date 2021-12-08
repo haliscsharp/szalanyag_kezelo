@@ -28,7 +28,6 @@ D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalkezelo\obj\Debug\net5.0-wind
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.AnyagInput.resources
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.csprojAssemblyReference.cache
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.SzalanyagInput.resources
-D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.csprojAssemblyReference.cache
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.AnyagInput.resources
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.BaseForm.resources
 D:\STUFF\Documents\Egyetem\7 felev\projektmunka\szalanyag_kezelo\szalkezelo\obj\Debug\net5.0-windows\szalkezelo.FoAblak.resources
