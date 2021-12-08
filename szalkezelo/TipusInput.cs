@@ -25,7 +25,7 @@ namespace szalkezelo
 
         private void btnFelvitel_Click(object sender, EventArgs e)
         {
-            if (txtNev.Text == "")
+            if (txtNev.Text == "" || (!chkKellSzelesseg.Checked && !chkKellMagassag.Checked && !chkKellVastagsag.Checked && !chkKellAtmero.Checked))
             {
                 MessageBox.Show("Rossz bemeneti adatok!");
                 return;
