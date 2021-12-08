@@ -460,9 +460,9 @@ namespace szalkezelo
 
         private void btnUjMeret_Click(object sender, EventArgs e)
         {
-            SimpleNameInput sni = new SimpleNameInput("meret");
+            MeretInput mi = new MeretInput();
 
-            sni.ShowDialog();
+            mi.ShowDialog();
 
             fillCbMeret();
         }
@@ -487,9 +487,9 @@ namespace szalkezelo
 
         private void btnUjTipus_Click(object sender, EventArgs e)
         {
-            SimpleNameInput sni = new SimpleNameInput("tipus");
+            TipusInput ti = new TipusInput();
 
-            sni.ShowDialog();
+            ti.ShowDialog();
 
             fillCbTipus();
         }
